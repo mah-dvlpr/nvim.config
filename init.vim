@@ -7,12 +7,13 @@ Plug 'neovim/nvim-lspconfig'
 
 " Misc
 Plug 'hoob3rt/lualine.nvim'
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 
 " Special
 "" Create directory for sessions
-:silent !mkdir -p "${HOME}/.local/share/nvim/sessions"
+:silent !mkdir -p "${HOME}/.local/share/nvim/session"
 
 
 " Custom settings
@@ -35,9 +36,9 @@ let mapleader = 'ö'
 "" Close current window
 nnoremap <Leader>w :q!<CR>
 "" Save session, all files, and close all windows
-nnoremap <Leader>q :mks! ~/.local/share/nvim/sessions/tmp.vim<CR> <Bar> :wqa<CR>
+nnoremap <Leader>q :mks! ~/.local/share/nvim/session/tmp.vim<CR> <Bar> :wqa<CR>
 "" Load previously saved session
-nnoremap <Leader>o :source ~/.local/share/nvim/sessions/tmp.vim<CR>
+nnoremap <Leader>o :source ~/.local/share/nvim/session/tmp.vim<CR>
 "" Move down/up but keep the cursor centered
 nnoremap <C-j> jzz
 nnoremap <C-k> kzz
