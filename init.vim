@@ -68,6 +68,7 @@ if v:shell_error == 1
     echoerr "Telescope's live-grep requires 'ripgrep' (command 'rg') to be installed!"
     echo "Please install 'ripgrep' using your systems package manager."
 endif
+nnoremap <Leader>ft <Cmd>Telescope<Cr>
 nnoremap <Leader>ff <Cmd>Telescope find_files<Cr>
 nnoremap <Leader>fg <Cmd>Telescope live_grep<Cr>
 nnoremap <Leader>fb <Cmd>Telescope buffers<Cr>
