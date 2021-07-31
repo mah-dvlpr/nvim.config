@@ -74,7 +74,7 @@ highlight SignColumn ctermbg=NONE guibg=NONE
 "" Lsp stuff
 silent !which clangd &>/dev/null
 if v:shell_error == 1
-    echoerr "The language server for programming in C ('clangd') is not installed on your system!"
+    echoerr "The language server for C ('clangd') is not installed on your system!"
     echo "Please install 'clangd' using your systems package manager."
 endif
 "" Telescope
