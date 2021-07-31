@@ -38,6 +38,12 @@ nnoremap <Leader>w :q!<CR>
 nnoremap <Leader>q :mks! ~/.local/share/nvim/sessions/tmp.vim<CR> <Bar> :wqa<CR>
 "" Load previously saved session
 nnoremap <Leader>o :source ~/.local/share/nvim/sessions/tmp.vim<CR>
+"" Move down/up but keep the cursor centered
+nnoremap <C-j> jzz
+nnoremap <C-k> kzz
+"" When searching and stepping between results, keep cursor centered
+nnoremap n nzz
+nnoremap N Nzz
 "" Misc
 nnoremap ä :
 
