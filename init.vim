@@ -32,21 +32,17 @@ set termguicolors               " Use true colors, instead oluf just usual 256-b
 
 
 " Key mappings
-let mapleader = 'ö'
+let mapleader = 'ä'
 "" Close current window
 nnoremap <Leader>w :q!<CR>
 "" Save session, all files, and close all windows
 nnoremap <Leader>q :mks! ~/.local/share/nvim/session/tmp.vim<CR> <Bar> :wqa<CR>
 "" Load previously saved session
 nnoremap <Leader>o :source ~/.local/share/nvim/session/tmp.vim<CR>
-"" Move down/up but keep the cursor centered
-nnoremap <C-j> jzz
-nnoremap <C-k> kzz
-"" When searching and stepping between results, keep cursor centered
-nnoremap n nzz
-nnoremap N Nzz
+"" Keep cursor centered by making the pre/post buffer padding very large
+set scrolloff=999
 "" Misc
-nnoremap ä :
+""" None currently...
 
 
 " Plugin config (Same order as they are installed
