@@ -19,6 +19,7 @@ Plug 'hoob3rt/lualine.nvim'
 call plug#end()
 
 
+" ====================================================================================================
 " Preamble
 "" Create directory for saved session(s)
 execute 'silent !mkdir -p '.stdpath('data').'/session'
@@ -32,7 +33,9 @@ function Centered_toggle()
 endfunction
 
 
+" ====================================================================================================
 " Custom settings
+syntax enable                   " Enable syntax linting (not needed with an LSP?)
 set termguicolors               " Use true colors, instead oluf just usual 256-bit colors.
 set nowrap                      " Do not wrap lines, plain and simple.
 set number relativenumber       " Absolute + Relative numbering (A.k.a. hybrid numbering).
@@ -48,10 +51,9 @@ set backspace=start,indent,eol  " Allow performing backspace over (almost) every
 set scrolloff=999               " Keep cursor centered by making the pre/post buffer padding very large
 
 
+" ====================================================================================================
 " Key mappings
 let mapleader = 'ö'
-"" Close current window
-nnoremap <Leader>w :q!<CR>
 "" Save session, save all files, and close all windows
 nnoremap <Leader>q :execute 'mks! '.stdpath('data').'/session/tmp.vim'<CR> <Bar> :wqa<CR>
 "" Load previously saved session
@@ -60,6 +62,7 @@ nnoremap <Leader>o :execute 'so '.stdpath('data').'/session/tmp.vim'<CR>
 nnoremap <Leader>c :call Centered_toggle()<CR>
 
 
+" ====================================================================================================
 " Plugin config (Same order as they are installed)
 "" Theming
 colorscheme gruvbox
@@ -83,6 +86,7 @@ nnoremap <Leader>fh <Cmd>Telescope help_tags<Cr>
 nnoremap <Leader>fo <Cmd>Telescope oldfiles<Cr>
 
 
+" ====================================================================================================
 " Lua plugin config 'import' (These are located in ~/.config/nvim/lua)
 lua << EOF
 require('_lspconfig_config')
