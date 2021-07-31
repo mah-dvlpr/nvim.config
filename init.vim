@@ -54,18 +54,23 @@ set scrolloff=999               " Keep cursor centered by making the pre/post bu
 " ====================================================================================================
 " Key mappings
 let mapleader = 'ö'
+"" Close window
+nnoremap <Leader>q :q<CR>
 "" Save session, save all files, and close all windows
-nnoremap <Leader>q :execute 'mks! '.stdpath('data').'/session/tmp.vim'<CR> <Bar> :wqa<CR>
+nnoremap <Leader>Q :execute 'mks! '.stdpath('data').'/session/tmp.vim'<CR> <Bar> :wqa<CR>
 "" Load previously saved session
-nnoremap <Leader>o :execute 'so '.stdpath('data').'/session/tmp.vim'<CR>
+nnoremap <Leader>O :execute 'so '.stdpath('data').'/session/tmp.vim'<CR>
 "" Toogle cursor centering
-nnoremap <Leader>c :call Centered_toggle()<CR>
+nnoremap <Leader>C :call Centered_toggle()<CR>
 
 
 " ====================================================================================================
 " Plugin config (Same order as they are installed)
 "" Theming
 colorscheme gruvbox
+highlight Normal     ctermbg=NONE guibg=NONE
+highlight LineNr     ctermbg=NONE guibg=NONE
+highlight SignColumn ctermbg=NONE guibg=NONE
 "" Lsp stuff
 silent !which clangd &>/dev/null
 if v:shell_error == 1
