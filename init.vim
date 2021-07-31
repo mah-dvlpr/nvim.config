@@ -4,6 +4,7 @@ Plug 'morhetz/gruvbox'
 
 " Lsp stuff
 Plug 'neovim/nvim-lspconfig'
+Plug 'glepnir/lspsaga.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
@@ -62,6 +63,12 @@ nnoremap <Leader>c :call Centered_toggle()<CR>
 " Plugin config (Same order as they are installed)
 "" Theming
 colorscheme gruvbox
+"" Lsp stuff
+silent !which clangd &>/dev/null
+if v:shell_error == 1
+    echoerr "The language server for programming in C ('clangd') is not installed on your system!"
+    echo "Please install 'clangd' using your systems package manager."
+endif
 "" Telescope
 silent !which rg &>/dev/null
 if v:shell_error == 1
@@ -78,6 +85,8 @@ nnoremap <Leader>fo <Cmd>Telescope oldfiles<Cr>
 
 " Lua plugin config 'import' (These are located in ~/.config/nvim/lua)
 lua << EOF
+require('_lspconfig_config')
+require('_lspsaga_config')
 require('_treesitter_config')
 require('_telescope_config')
 require('_lualine_config')
