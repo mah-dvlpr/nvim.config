@@ -1,30 +1,9 @@
-call plug#begin(stdpath('data').'/plugins')
-" Theming
-Plug 'morhetz/gruvbox'
-
-" Lsp stuff
-Plug 'neovim/nvim-lspconfig'
-Plug 'glepnir/lspsaga.nvim'
-
-" Treesitter
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-
-" Telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-" Misc
-Plug 'hoob3rt/lualine.nvim'
-call plug#end()
-
-
-" ====================================================================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Preamble
 "" Create directory for saved session(s)
 execute 'silent !mkdir -p '.stdpath('data').'/session'
 "" Function to toggle centering
-function Centered_toggle()
+function Toggle_centered_cursor()
     if &scrolloff == 999
         set scrolloff=5
     else
@@ -33,7 +12,32 @@ function Centered_toggle()
 endfunction
 
 
-" ====================================================================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins (Each 'Plug' with a header have their settings configured further down).
+call plug#begin(stdpath('data').'/plugins')
+" gruvbox
+Plug 'morhetz/gruvbox'
+
+" nvim-lspconfig
+Plug 'neovim/nvim-lspconfig'
+
+" lspsaga
+Plug 'glepnir/lspsaga.nvim'
+
+" nvim-treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
+" lualine
+Plug 'hoob3rt/lualine.nvim'
+call plug#end()
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Custom settings
 syntax enable                   " Enable syntax linting (not needed with an LSP?)
 set termguicolors               " Use true colors, instead oluf just usual 256-bit colors.
@@ -51,7 +55,7 @@ set backspace=start,indent,eol  " Allow performing backspace over (almost) every
 set scrolloff=999               " Keep cursor centered by making the pre/post buffer padding very large
 
 
-" ====================================================================================================
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key mappings
 let mapleader = 'ö'
 "" Close window
@@ -61,42 +65,21 @@ nnoremap <Leader>Q :execute 'mks! '.stdpath('data').'/session/tmp.vim'<CR> <Bar>
 "" Load previously saved session
 nnoremap <Leader>O :execute 'so '.stdpath('data').'/session/tmp.vim'<CR>
 "" Toogle cursor centering
-nnoremap <Leader>C :call Centered_toggle()<CR>
+nnoremap <Leader>C :call Toggle_centered_cursor()<CR>
 
 
-" ====================================================================================================
-" Plugin config (Same order as they are installed)
-"" Theming
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin configurations
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'morhetz/gruvbox'
 colorscheme gruvbox
+" Make background transparent
+let g:gruvbox_transparent_bg=1
 highlight Normal     ctermbg=NONE guibg=NONE
 highlight LineNr     ctermbg=NONE guibg=NONE
 highlight SignColumn ctermbg=NONE guibg=NONE
-"" Lsp stuff
-silent !which clangd &>/dev/null
-if v:shell_error == 1
-    echoerr "The language server for C ('clangd') is not installed on your system!"
-    echo "Please install 'clangd' using your systems package manager."
-endif
-"" Telescope
-silent !which rg &>/dev/null
-if v:shell_error == 1
-    echoerr "Telescope's live-grep requires 'ripgrep' (command 'rg') to be installed!"
-    echo "Please install 'ripgrep' using your systems package manager."
-endif
-nnoremap <Leader>ft <Cmd>Telescope<Cr>
-nnoremap <Leader>ff <Cmd>Telescope find_files<Cr>
-nnoremap <Leader>fg <Cmd>Telescope live_grep<Cr>
-nnoremap <Leader>fb <Cmd>Telescope buffers<Cr>
-nnoremap <Leader>fh <Cmd>Telescope help_tags<Cr>
-nnoremap <Leader>fo <Cmd>Telescope oldfiles<Cr>
 
-
-" ====================================================================================================
-" Lua plugin config 'import' (These are located in ~/.config/nvim/lua)
-lua << EOF
-require('_lspconfig_config')
-require('_lspsaga_config')
-require('_treesitter_config')
-require('_telescope_config')
-require('_lualine_config')
-EOF
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'neovim/nvim-lspconfig'
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'glepnir/lspsaga.nvim'
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'nvim-treesitter/nvim-treesitter'
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'nvim-telescope/telescope.nvim'
+"""""""""""""""""""""""""""""""""""""""""""""""""" Plug 'hoob3rt/lualine.nvim'
