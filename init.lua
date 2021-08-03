@@ -53,15 +53,17 @@ call plug#begin(stdpath('data').'/plugged')
 " Theming
 Plug 'morhetz/gruvbox'
 
-" LSP
+" LSP [Note: LspInfo to check status]
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
+
+" Treesitter [Note: Run TSInstall c]
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 " Telescope
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
-
 call plug#end()
 ]])
 
@@ -201,6 +203,24 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 --This line is important for auto-import
 --vim.api.nvim_set_keymap('i', '<cr>', 'compe#confirm("<cr>")', { expr = true })
 --vim.api.nvim_set_keymap('i', '<c-space>', 'compe#complete()', { expr = true })
+
+
+----------------------------------------------------------------------------------------------------
+-- nvim-treesitter/nvim-treesitter
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["foo.bar"] = "Identifier",
+    },
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
 
 
 ----------------------------------------------------------------------------------------------------
