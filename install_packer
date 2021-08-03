@@ -1,0 +1,2 @@
+#!/bin/bash
+cp ${HOME}/.config/nvim/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
