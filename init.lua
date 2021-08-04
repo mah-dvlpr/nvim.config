@@ -56,12 +56,14 @@ require('packer').startup({
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
+        use { 'hoob3rt/lualine.nvim' }
     end
     ,
     config = {
         compile_path = util.join_paths(vim.fn.stdpath('data'), 'plugin', 'packer_compiled.lua'),
     }
 })
+
 
 
 ----------------------------------------------------------------------------------------------------
@@ -235,3 +237,34 @@ nnoremap("<Leader>fo", ":lua require('telescope.builtin').oldfiles()<Cr>")
 -- FAQ
 -- Q: "My favorite file type isn't supported!"
 -- A: Relax! You just have to adjust 'commentstring': "autocmd FileType apache setlocal commentstring=#\ %s"
+
+
+----------------------------------------------------------------------------------------------------
+-- hoob3rt/lualine.nvim
+require'lualine'.setup {
+  options = {
+    icons_enabled = false,
+    theme = 'vscode',
+    component_separators = {'', ''},
+    section_separators = {'', ''},
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {''},
+    lualine_c = {'filename','filetype','fileformat','encoding'},
+    lualine_x = {'progress','diff'},
+    lualine_y = {''},
+    lualine_z = {'branch','location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
