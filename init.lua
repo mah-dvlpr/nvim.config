@@ -1,4 +1,4 @@
-----------------------------------------------------------------------------------------------------
+--------------------------------------
 -- Definitions
 -- Notes:
 -- > nvim_set_keymap example is wrong in :h? Should not be string in options.
@@ -18,10 +18,9 @@ vim.opt.syntax = 'on'                     -- Enable syntax linting (not needed w
 vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
 vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
 vim.opt.number = true                     -- Absolute numbering.
-vim.opt.relativenumber = true             -- Relative numberiing.
 vim.opt.cursorline = true                 -- Highlight current line.
 vim.opt.list = true                       -- Render special characters such as whitespace and TAB's.
-vim.opt.listchars = 'space:·'             -- Render whitespace as '·'.
+vim.opt.listchars = "tab:> ,space:·"      -- Render whitespace as '·'.
 vim.opt.expandtab = true                  -- Expand TABs into spaces when tabbing.
 vim.opt.shiftwidth = 4                    -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
 vim.opt.tabstop = 4                       -- Length of an actual TAB, i.e. not whitespace(s).
@@ -48,29 +47,28 @@ nnoremap('K', '4k')
 
 ----------------------------------------------------------------------------------------------------
 -- Plugin installs followed by plugin settings
-vim.cmd([[
-call plug#begin(stdpath('data').'/plugged')
-" Theming
-Plug 'morhetz/gruvbox'
-
-" LSP [Note: LspInfo to check status]
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-
-" Treesitter [Note: Run TSInstall c]
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
-
-" Telescope
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-call plug#end()
-]])
+local util = require('packer.util')
+require('packer').startup({
+    function ()
+        use { 'wbthomason/packer.nvim' }
+        use { 'Mofiqul/vscode.nvim' }
+        use { 'neovim/nvim-lspconfig' , requires = 'hrsh7th/nvim-compe' }
+        use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+        use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
+        use { 'tpope/vim-commentary' }
+    end
+    ,
+    config = {
+        compile_path = util.join_paths(vim.fn.stdpath('data'), 'plugin', 'packer_compiled.lua'),
+    }
+})
 
 
 ----------------------------------------------------------------------------------------------------
--- morhetz/gruvbox
-vim.cmd('colo gruvbox')
+-- Mofiqul/vscode.nvim
+vim.g.vscode_style = "light"
+vim.cmd[[colorscheme vscode]]
+vim.cmd[[highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#CCCCCC]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -111,7 +109,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "ccls" }
+local servers = { "clangd" }
 if next(servers) == nil then
     error("List of LSP servers is empty!")
 end
@@ -225,9 +223,15 @@ require'nvim-treesitter.configs'.setup {
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-telescope/telescope.nvim
-nnoremap('<Leader>ff', ':lua require(\'telescope.builtin\').find_files()<Cr>')
-nnoremap('<Leader>fg', ':lua require(\'telescope.builtin\').lives_grep()<Cr>')
-nnoremap('<Leader>fg', ':lua require(\'telescope.builtin\').lives_grep()<Cr>')
-nnoremap('<Leader>fg', ':lua require(\'telescope.builtin\').buffers()<Cr>')
-nnoremap('<Leader>fh', ':lua require(\'telescope.builtin\').help_tags()<Cr>')
-nnoremap('<Leader>fo', ':lua require(\'telescope.builtin\').oldfiles()<Cr>')
+nnoremap("<Leader>ff", ":lua require('telescope.builtin').find_files()<Cr>")
+nnoremap("<Leader>fg", ":lua require('telescope.builtin').live_grep()<Cr>")
+nnoremap("<Leader>fb", ":lua require('telescope.builtin').buffers()<Cr>")
+nnoremap("<Leader>fh", ":lua require('telescope.builtin').help_tags()<Cr>")
+nnoremap("<Leader>fo", ":lua require('telescope.builtin').oldfiles()<Cr>")
+
+
+----------------------------------------------------------------------------------------------------
+-- mtpope/vim-commentary
+-- FAQ
+-- Q: "My favorite file type isn't supported!"
+-- A: Relax! You just have to adjust 'commentstring': "autocmd FileType apache setlocal commentstring=#\ %s"
