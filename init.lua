@@ -246,7 +246,7 @@ require'lualine'.setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {''},
-    lualine_c = {'filename','filetype','fileformat','encoding'},
+    lualine_c = {'encoding','fileformat','filetype','filename'},
     lualine_x = {'location','progress','branch'},
     lualine_y = {''},
     lualine_z = {'branch'}
