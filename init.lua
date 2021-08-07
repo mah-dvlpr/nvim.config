@@ -52,7 +52,7 @@ require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
-        use { 'neovim/nvim-lspconfig' , requires = 'hrsh7th/nvim-compe' }
+        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe', 'ray-x/lsp_signature.nvim' } }
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
@@ -141,6 +141,16 @@ local on_attach = function(client, bufnr)
             ultisnips = true;
             luasnip = true;
         };
+
+        require('lsp_signature').on_attach({
+            bind = true, -- This is mandatory, otherwise border config won't get registered.
+            doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
+            fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
+            hint_enable = false, -- virtual hint enable
+            handler_opts = {
+              border = "double"   -- double, single, shadow, none
+            },
+        })
 }
 
 local t = function(str)
