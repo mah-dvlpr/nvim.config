@@ -256,7 +256,7 @@ require'lualine'.setup {
     lualine_a = {'mode'},
     lualine_b = {''},
     lualine_c = {'encoding','fileformat','filetype','filename'},
-    lualine_x = {'location','progress','branch'},
+    lualine_x = {'location','progress','diff'},
     lualine_y = {''},
     lualine_z = {'branch'}
   },
