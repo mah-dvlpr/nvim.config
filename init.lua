@@ -2,7 +2,6 @@
 -- Definitions
 -- Notes:
 -- > nvim_set_keymap example is wrong in :h? Should not be string in options.
--- > nvim_set_options does not work for all options. For example 'wrap' false does not do anything. Not sure if it due to the global/local thing.
 function toggle_cursor_centering()
     if vim.opt.scrolloff:get() == 999 then
         vim.opt.scrolloff = 5
