@@ -2,7 +2,7 @@
 -- Definitions
 -- Notes:
 -- > nvim_set_keymap example is wrong in :h? Should not be string in options.
-function toggle_cursor_centering()
+function Toggle_cursor_centering()
     if vim.opt.scrolloff:get() == 999 then
         vim.opt.scrolloff = 5
     else
@@ -12,7 +12,7 @@ end
 
 
 ----------------------------------------------------------------------------------------------------
--- Vim settings
+
 vim.opt.syntax = 'on'                     -- Enable syntax linting (not needed with an LSP?)
 vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
 vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
@@ -38,7 +38,7 @@ vim.g.mapleader = 'ö'
 -- Close window immediately
 nnoremap('<Leader>q', ':q<CR>')
 -- Toggle cursor centering
-nnoremap('<Leader>C', ':lua toggle_cursor_centering()<CR>')
+nnoremap('<Leader>C', ':lua Toggle_cursor_centering()<CR>')
 -- SPRINT!
 nnoremap('J', '4j')
 nnoremap('K', '4k')
