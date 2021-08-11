@@ -1,18 +1,12 @@
---------------------------------------
--- Definitions
--- Notes:
--- > nvim_set_keymap example is wrong in :h? Should not be string in options.
-function Toggle_cursor_centering()
-    if vim.opt.scrolloff:get() == 999 then
-        vim.opt.scrolloff = 5
-    else
-        vim.opt.scrolloff = 999
-    end
+----------------------------------------------------------------------------------------------------
+-- Init definitions
+local nnoremap = function (lhs, rhs, options)
+    return vim.api.nvim_set_keymap('n', lhs, rhs, options or { noremap = true })
 end
 
 
 ----------------------------------------------------------------------------------------------------
--- Vim settings
+-- Vim settings/options
 vim.cmd[[syntax on]]                      -- Enable syntax linting (not needed with an LSP?)
 vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
 vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
@@ -30,16 +24,8 @@ vim.opt.scrolloff = 999                   -- Keep cursor centered by making the 
 
 
 ----------------------------------------------------------------------------------------------------
--- Keymaps
-local nnoremap = function (lhs, rhs, options)
-    return vim.api.nvim_set_keymap('n', lhs, rhs, options or { noremap = true })
-end
+-- Global keymaps
 vim.g.mapleader = 'ö'
--- Close window immediately
-nnoremap('<Leader>q', ':q<CR>')
--- Toggle cursor centering
-nnoremap('<Leader>C', ':lua Toggle_cursor_centering()<CR>')
--- SPRINT!
 nnoremap('J', '4j')
 nnoremap('K', '4k')
 
@@ -62,7 +48,6 @@ require('packer').startup({
         compile_path = util.join_paths(vim.fn.stdpath('data'), 'plugin', 'packer_compiled.lua'),
     }
 })
-
 
 
 ----------------------------------------------------------------------------------------------------
@@ -91,13 +76,8 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'gr', '<Cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('!', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<Leader>d', '<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    buf_set_keymap('n', '<Up>', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-    buf_set_keymap('n', '<Down>', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
     vim.o.completeopt = "menuone,noselect"
     require('compe').setup {
@@ -192,7 +172,7 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-treesitter/nvim-treesitter
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup({
   highlight = {
     enable = true,
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -201,7 +181,7 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
-}
+})
 
 
 ----------------------------------------------------------------------------------------------------
@@ -211,6 +191,10 @@ nnoremap("<Leader>fg", ":lua require('telescope.builtin').live_grep()<Cr>")
 nnoremap("<Leader>fb", ":lua require('telescope.builtin').buffers()<Cr>")
 nnoremap("<Leader>fh", ":lua require('telescope.builtin').help_tags()<Cr>")
 nnoremap("<Leader>fo", ":lua require('telescope.builtin').oldfiles()<Cr>")
+nnoremap("<Leader>fm", ":lua require('telescope.builtin').man_pages()<Cr>")
+nnoremap("<Leader>fr", ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>")
+nnoremap("<Leader>fd", ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>")
+nnoremap("<Leader>fa", ":lua require('telescope.builtin').lsp_code_actions()<Cr>")
 
 
 ----------------------------------------------------------------------------------------------------
@@ -222,7 +206,7 @@ nnoremap("<Leader>fo", ":lua require('telescope.builtin').oldfiles()<Cr>")
 
 ----------------------------------------------------------------------------------------------------
 -- hoob3rt/lualine.nvim
-require'lualine'.setup {
+require('lualine').setup({
   options = {
     icons_enabled = false,
     theme = 'vscode',
@@ -248,4 +232,4 @@ require'lualine'.setup {
   },
   tabline = {},
   extensions = {}
-}
+})
