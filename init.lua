@@ -51,7 +51,7 @@ require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
-        use { 'neoclide/coc.nvim' , branch = 'release' }
+        use { 'neoclide/coc.nvim' , branch = 'release', run = ':CocInstall coc-sh coc-markdownlint coc-clangd coc-pyright coc-tsserver coc-json  coc-cmake' }
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
