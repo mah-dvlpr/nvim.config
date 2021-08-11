@@ -73,7 +73,7 @@ vim.cmd[[highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#CCCCCC
 
 
 ----------------------------------------------------------------------------------------------------
--- neoclide/coc.nvim
+-- neoclide/coc.nvim (pretty much a copy of the default config, with changes for it to work in lua.)
 vim.cmd[[
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
@@ -116,7 +116,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call Show_documentation()<CR>
+nnoremap <silent> <Leader>k :call Show_documentation()<CR>
 
 function! Show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
