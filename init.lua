@@ -52,7 +52,7 @@ require('packer').startup({
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
-        use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+        use { 'nvim-treesitter/nvim-treesitter', run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
         use { 'hoob3rt/lualine.nvim' }
@@ -203,10 +203,6 @@ end
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      ["foo.bar"] = "Identifier",
-    },
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
