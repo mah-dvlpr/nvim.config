@@ -2,7 +2,7 @@
 -- Definitions
 -- Notes:
 -- > nvim_set_keymap example is wrong in :h? Should not be string in options.
-function toggle_cursor_centering()
+function Toggle_cursor_centering()
     if vim.opt.scrolloff:get() == 999 then
         vim.opt.scrolloff = 5
     else
@@ -38,7 +38,7 @@ vim.g.mapleader = 'ö'
 -- Close window immediately
 nnoremap('<Leader>q', ':q<CR>')
 -- Toggle cursor centering
-nnoremap('<Leader>C', ':lua toggle_cursor_centering()<CR>')
+nnoremap('<Leader>C', ':lua Toggle_cursor_centering()<CR>')
 -- SPRINT!
 nnoremap('J', '4j')
 nnoremap('K', '4k')
@@ -51,7 +51,7 @@ require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
-        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe', 'ray-x/lsp_signature.nvim' } }
+        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
         use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
@@ -140,16 +140,6 @@ local on_attach = function(client, bufnr)
             ultisnips = true;
             luasnip = true;
         };
-
-        require('lsp_signature').on_attach({
-            bind = true, -- This is mandatory, otherwise border config won't get registered.
-            doc_lines = 2, -- will show two lines of comment/doc(if there are more than two lines in doc, will be truncated);
-            fix_pos = false,  -- set to true, the floating window will not auto-close until finish all parameters
-            hint_enable = false, -- virtual hint enable
-            handler_opts = {
-              border = "double"   -- double, single, shadow, none
-            },
-        })
 }
 
 local t = function(str)
