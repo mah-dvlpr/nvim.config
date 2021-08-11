@@ -190,15 +190,15 @@ local telescope_ripgrep = os.execute("/bin/bash -c 'rg --version'")
 if not telescope_ripgrep then
     error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work")
 end
-nnoremap("<Leader>ff", ":lua require('telescope.builtin').find_files()<Cr>")
-nnoremap("<Leader>fg", ":lua require('telescope.builtin').live_grep()<Cr>")
-nnoremap("<Leader>fb", ":lua require('telescope.builtin').buffers()<Cr>")
-nnoremap("<Leader>fh", ":lua require('telescope.builtin').help_tags()<Cr>")
-nnoremap("<Leader>fo", ":lua require('telescope.builtin').oldfiles()<Cr>")
-nnoremap("<Leader>fm", ":lua require('telescope.builtin').man_pages()<Cr>")
-nnoremap("<Leader>fr", ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>")
-nnoremap("<Leader>fd", ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>")
-nnoremap("<Leader>fa", ":lua require('telescope.builtin').lsp_code_actions()<Cr>")
+nnoremap("<Leader>f", ":lua require('telescope.builtin').find_files()<Cr>")
+nnoremap("<Leader>g", ":lua require('telescope.builtin').live_grep()<Cr>")
+nnoremap("<Leader>b", ":lua require('telescope.builtin').buffers()<Cr>")
+nnoremap("<Leader>o", ":lua require('telescope.builtin').oldfiles()<Cr>")
+nnoremap("<Leader>h", ":lua require('telescope.builtin').help_tags()<Cr>")
+nnoremap("<Leader>m", ":lua require('telescope.builtin').man_pages()<Cr>")
+nnoremap("<Leader>r", ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>")
+nnoremap("<Leader>d", ":lua require('telescope.builtin').lsp_document_diagnostics(require('telescope.themes').get_ivy({}))<Cr>")
+nnoremap("<Leader>a", ":lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_ivy({}))<Cr>")
 
 
 ----------------------------------------------------------------------------------------------------
