@@ -156,17 +156,14 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "clangd", "rust_analyzer" }
-if next(servers) == nil then
-    error("List of LSP servers is empty!")
-end
+local servers = { 'clangd', 'rust_analyzer' }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      }
     }
-  }
 end
 
 
@@ -186,9 +183,8 @@ require('nvim-treesitter.configs').setup({
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-telescope/telescope.nvim
-local telescope_ripgrep = os.execute("/bin/bash -c 'rg --version'")
-if not telescope_ripgrep then
-    error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work")
+if not os.execute('rg --version') then
+    error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
 end
 nnoremap("<Leader>f", ":lua require('telescope.builtin').find_files()<Cr>")
 nnoremap("<Leader>g", ":lua require('telescope.builtin').live_grep()<Cr>")
