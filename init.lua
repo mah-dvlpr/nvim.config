@@ -37,6 +37,7 @@ require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
+        use { 'morhetz/gruvbox' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
         use { 'nvim-treesitter/nvim-treesitter', run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
@@ -51,10 +52,12 @@ require('packer').startup({
 
 
 ----------------------------------------------------------------------------------------------------
--- Mofiqul/vscode.nvim
-vim.g.vscode_style = "light"
-vim.cmd[[colorscheme vscode]]
-vim.cmd[[highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#CCCCCC]]
+-- Mofiqul/vscode.nvim | morhetz/gruvbox
+vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
+vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
+--vim.g.vscode_style = "light"
+--vim.cmd[[colorscheme vscode]]
+vim.cmd[[colorscheme gruvbox]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -209,7 +212,7 @@ nnoremap("<Leader>a", ":lua require('telescope.builtin').lsp_code_actions(requir
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'vscode',
+    theme = 'gruvbox',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
