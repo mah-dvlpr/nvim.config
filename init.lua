@@ -1,13 +1,6 @@
 ----------------------------------------------------------------------------------------------------
--- Init definitions
-local nnoremap = function (lhs, rhs, options)
-    return vim.api.nvim_set_keymap('n', lhs, rhs, options or { noremap = true })
-end
-
-
-----------------------------------------------------------------------------------------------------
 -- Vim settings/options
-vim.cmd[[syntax on]]                      -- Enable syntax linting (not needed with an LSP?)
+vim.opt.syntax = 'on'                     -- Enable syntax linting (not needed with an LSP?)
 vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
 vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
 vim.opt.number = true                     -- Absolute numbering.
@@ -26,20 +19,8 @@ vim.opt.scrolloff = 999                   -- Keep cursor centered by making the 
 ----------------------------------------------------------------------------------------------------
 -- Global keymaps
 vim.g.mapleader = 'ö'
-nnoremap('J', '4j')
-nnoremap('K', '4k')
-vim.cmd[[tnoremap <A-h> <C-\><C-N><C-w>h]]
-vim.cmd[[tnoremap <A-j> <C-\><C-N><C-w>j]]
-vim.cmd[[tnoremap <A-k> <C-\><C-N><C-w>k]]
-vim.cmd[[tnoremap <A-l> <C-\><C-N><C-w>l]]
-vim.cmd[[inoremap <A-h> <C-\><C-N><C-w>h]]
-vim.cmd[[inoremap <A-j> <C-\><C-N><C-w>j]]
-vim.cmd[[inoremap <A-k> <C-\><C-N><C-w>k]]
-vim.cmd[[inoremap <A-l> <C-\><C-N><C-w>l]]
-vim.cmd[[nnoremap <A-h> <C-w>h]]
-vim.cmd[[nnoremap <A-j> <C-w>j]]
-vim.cmd[[nnoremap <A-k> <C-w>k]]
-vim.cmd[[nnoremap <A-l> <C-w>l]]
+vim.api.nvim_set_keymap('n', 'J', '4j', { noremap = true })
+vim.api.nvim_set_keymap('n', 'K', '4k', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
@@ -65,10 +46,10 @@ require('packer').startup({
 
 ----------------------------------------------------------------------------------------------------
 -- Mofiqul/vscode.nvim | morhetz/gruvbox
-vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
-vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
 --vim.g.vscode_style = "light"
 --vim.cmd[[colorscheme vscode]]
+vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
+vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
 vim.cmd[[colorscheme gruvbox]]
 
 
@@ -201,22 +182,15 @@ require('nvim-treesitter.configs').setup({
 if not os.execute('rg --version') then
     error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
 end
-nnoremap("<Leader>f", ":lua require('telescope.builtin').find_files()<Cr>")
-nnoremap("<Leader>g", ":lua require('telescope.builtin').live_grep()<Cr>")
-nnoremap("<Leader>b", ":lua require('telescope.builtin').buffers()<Cr>")
-nnoremap("<Leader>o", ":lua require('telescope.builtin').oldfiles()<Cr>")
-nnoremap("<Leader>h", ":lua require('telescope.builtin').help_tags()<Cr>")
-nnoremap("<Leader>m", ":lua require('telescope.builtin').man_pages()<Cr>")
-nnoremap("<Leader>r", ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>")
-nnoremap("<Leader>d", ":lua require('telescope.builtin').lsp_document_diagnostics(require('telescope.themes').get_ivy({}))<Cr>")
-nnoremap("<Leader>a", ":lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_ivy({}))<Cr>")
-
-
-----------------------------------------------------------------------------------------------------
--- mtpope/vim-commentary
--- FAQ
--- Q: "My favorite file type isn't supported!"
--- A: Relax! You just have to adjust 'commentstring': "autocmd FileType apache setlocal commentstring=#\ %s"
+vim.api.nvim_set_keymap('n', '<Leader>f', ":lua require('telescope.builtin').find_files()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>g', ":lua require('telescope.builtin').live_grep()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').buffers()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').oldfiles()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>h', ":lua require('telescope.builtin').help_tags()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>m', ":lua require('telescope.builtin').man_pages()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
