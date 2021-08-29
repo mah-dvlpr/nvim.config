@@ -1,5 +1,6 @@
 ----------------------------------------------------------------------------------------------------
 -- Vim settings/options
+vim.opt.clipboard = 'unnamedplus'         -- Enable system clipboard
 vim.opt.syntax = 'on'                     -- Enable syntax linting (not needed with an LSP?)
 vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
 vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
