@@ -33,7 +33,7 @@ require('packer').startup({
         use { 'Mofiqul/vscode.nvim' }
         use { 'morhetz/gruvbox' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
-        use { 'nvim-treesitter/nvim-treesitter', run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
+        use { 'nvim-treesitter/nvim-treesitter' } --, run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
         use { 'hoob3rt/lualine.nvim' }
