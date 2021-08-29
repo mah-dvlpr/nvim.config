@@ -32,6 +32,7 @@ require('packer').startup({
         use { 'wbthomason/packer.nvim' }
         use { 'Mofiqul/vscode.nvim' }
         use { 'morhetz/gruvbox' }
+        use { 'rakr/vim-one' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
         use { 'nvim-treesitter/nvim-treesitter' } --, run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
@@ -49,9 +50,11 @@ require('packer').startup({
 -- Mofiqul/vscode.nvim | morhetz/gruvbox
 --vim.g.vscode_style = "light"
 --vim.cmd[[colorscheme vscode]]
-vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
-vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
-vim.cmd[[colorscheme gruvbox]]
+--vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
+--vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
+--vim.cmd[[colorscheme gruvbox]]
+vim.cmd[[colorscheme one]]
+vim.cmd[[set background=light]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -199,7 +202,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'gruvbox',
+    theme = 'onelight',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
