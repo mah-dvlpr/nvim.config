@@ -33,6 +33,7 @@ require('packer').startup({
         use { 'Mofiqul/vscode.nvim' }
         use { 'morhetz/gruvbox' }
         use { 'rakr/vim-one' }
+        use { 'NLKNguyen/papercolor-theme' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
         use { 'nvim-treesitter/nvim-treesitter' } --, run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
@@ -47,14 +48,17 @@ require('packer').startup({
 
 
 ----------------------------------------------------------------------------------------------------
--- Mofiqul/vscode.nvim | morhetz/gruvbox
+-- Themes
 --vim.g.vscode_style = "light"
 --vim.cmd[[colorscheme vscode]]
 --vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
 --vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
 --vim.cmd[[colorscheme gruvbox]]
-vim.cmd[[colorscheme one]]
+--vim.cmd[[colorscheme one]]
+--vim.cmd[[set background=light]]
+vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=light]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -76,6 +80,7 @@ local on_attach = function(client, bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementaion()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('!', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
@@ -213,7 +218,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'onelight',
+    theme = 'vscode',
     component_separators = {'', ''},
     section_separators = {'', ''},
     disabled_filetypes = {}
