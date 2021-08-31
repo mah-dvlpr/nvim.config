@@ -14,7 +14,7 @@ vim.opt.tabstop = 4                       -- Length of an actual TAB, i.e. not w
 vim.opt.softtabstop = 4                   -- I have not idea what this does.
 vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
 vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
-vim.opt.scrolloff = 999                   -- Keep cursor centered by making the pre/post buffer padding very large
+vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large
 
 
 ----------------------------------------------------------------------------------------------------
@@ -183,6 +183,17 @@ require('nvim-treesitter.configs').setup({
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-telescope/telescope.nvim
+local actions = require('telescope.actions')
+require('telescope').setup{
+    defaults = {
+        layout_strategy = 'vertical',
+        mappings = {
+          i = {
+            ["<esc>"] = actions.close
+          },
+        },
+    }
+}
 if not os.execute('rg --version') then
     error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
 end
@@ -192,9 +203,9 @@ vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').buf
 vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').oldfiles()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>h', ":lua require('telescope.builtin').help_tags()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>m', ":lua require('telescope.builtin').man_pages()<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions(require('telescope.themes').get_ivy({}))<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions(require()<Cr>", { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
