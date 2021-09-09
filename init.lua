@@ -35,7 +35,7 @@ require('packer').startup({
         use { 'rakr/vim-one' }
         use { 'NLKNguyen/papercolor-theme' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
-        use { 'nvim-treesitter/nvim-treesitter' } --, run = function() vim.cmd[[TSUpdate]]; vim.cmd[[TSInstall bash c cmake comment cpp dockerfile java javascript json latex lua php python regex rust typescript yaml]]; end }
+        use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
         use { 'hoob3rt/lualine.nvim' }
@@ -174,15 +174,19 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-treesitter/nvim-treesitter
+if not os.execute('c++ --version') then
+    error("C++ compiler package ('gcc-c++') is not installed. Installing languages in/with treesitter will not work (fail to compile).")
+end
 require('nvim-treesitter.configs').setup({
-  highlight = {
-    enable = true,
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
+    ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
+    highlight = {
+        enable = true,
+        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+        -- Using this option may slow down your editor, and you may see some duplicate highlights.
+        -- Instead of true it can also be a list of languages
+        additional_vim_regex_highlighting = false,
+    },
 })
 
 
@@ -219,8 +223,8 @@ require('lualine').setup({
   options = {
     icons_enabled = false,
     theme = 'vscode',
-    component_separators = {'', ''},
-    section_separators = {'', ''},
+    component_separators = {'|', '|'},
+    section_separators = {' ', ' '},
     disabled_filetypes = {}
   },
   sections = {
