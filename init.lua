@@ -34,7 +34,7 @@ require('packer').startup({
         use { 'morhetz/gruvbox' }
         use { 'rakr/vim-one' }
         use { 'NLKNguyen/papercolor-theme' }
-        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-compe' } }
+        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
@@ -123,39 +123,48 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
     -- LSP-dependent extensions
-     vim.o.completeopt = "menuone,noselect"
-    require('compe').setup {
-        enabled = true;
-        autocomplete = true;
-        debug = false;
-        min_length = 1;
-        preselect = 'enable';
-        throttle_time = 80;
-        source_timeout = 200;
-        resolve_timeout = 800;
-        incomplete_delay = 400;
-        max_abbr_width = 100;
-        max_kind_width = 100;
-        max_menu_width = 100;
-        documentation = {
-            border = { '', '' ,'', ' ', '', '', '', ' ' }, -- the border option is the same as `|help nvim_open_win|`
-            winhighlight = "NormalFloat:CompeDocumentation,FloatBorder:CompeDocumentationBorder",
-            max_width = 120,
-            min_width = 60,
-            max_height = math.floor(vim.o.lines * 0.3),
-            min_height = 1,
-        };
-    
-        source = {
-            path = true;
-            buffer = true;
-            calc = true;
-            nvim_lsp = true;
-            nvim_lua = true;
-            vsnip = true;
-            ultisnips = true;
-            luasnip = true;
-        };
+    vim.o.completeopt = "menuone,noselect"
+    local cmp = require('cmp')
+    cmp.setup {
+        snippet = {
+            expand = function(args)
+                require('luasnip').lsp_expand(args.body)
+            end,
+        },
+        mapping = {
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<C-e>'] = cmp.mapping.close(),
+          ['<CR>'] = cmp.mapping.confirm {
+              behavior = cmp.ConfirmBehavior.Replace,
+              select = true,
+          },
+          ['<Tab>'] = function(fallback)
+              if vim.fn.pumvisible() == 1 then
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+              elseif luasnip.expand_or_jumpable() then
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
+              else
+                  fallback()
+              end
+          end,
+          ['<S-Tab>'] = function(fallback)
+              if vim.fn.pumvisible() == 1 then
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+              elseif luasnip.jumpable(-1) then
+                  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
+              else
+                  fallback()
+              end
+          end,
+        },
+        sources = {
+            { name = 'nvim_lsp' },
+            { name = 'luasnip' },
+        },
     }
 end
 
