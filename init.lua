@@ -192,6 +192,9 @@ require('nvim-treesitter.configs').setup({
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-telescope/telescope.nvim
+if not os.execute('rg --version') then
+    error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
+end
 local actions = require('telescope.actions')
 require('telescope').setup{
     defaults = {
@@ -203,9 +206,6 @@ require('telescope').setup{
         },
     }
 }
-if not os.execute('rg --version') then
-    error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
-end
 vim.api.nvim_set_keymap('n', '<Leader>f', ":lua require('telescope.builtin').find_files()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>g', ":lua require('telescope.builtin').live_grep()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').buffers()<Cr>", { noremap = true })
