@@ -11,7 +11,7 @@ vim.opt.listchars = "tab:> ,space:·"      -- Render whitespace as '·'.
 vim.opt.expandtab = true                  -- Expand TABs into spaces when tabbing.
 vim.opt.shiftwidth = 4                    -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
 vim.opt.tabstop = 4                       -- Length of an actual TAB, i.e. not whitespace(s).
-vim.opt.softtabstop = 4                   -- I have not idea what this does.
+vim.opt.softtabstop = 4                   -- I have no idea what this does.
 vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
 vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large
@@ -20,12 +20,12 @@ vim.opt.scrolloff = 16                    -- Keep cursor centered by making the 
 ----------------------------------------------------------------------------------------------------
 -- Global keymaps
 vim.g.mapleader = 'ö'
-vim.api.nvim_set_keymap('n', 'J', '4j', { noremap = true })
-vim.api.nvim_set_keymap('n', 'K', '4k', { noremap = true })
+vim.api.nvim_set_keymap('n', 'J', '8j', { noremap = true })
+vim.api.nvim_set_keymap('n', 'K', '8k', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
--- Plugin installs followed by plugin settings
+-- Plugin(s) (followed by plugin settings)
 local util = require('packer.util')
 require('packer').startup({
     function ()
@@ -71,56 +71,16 @@ local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-    --Enable completion triggered by <c-x><c-o>
+    --Enable completion triggered by <c-x><c-o> (IN INSERT MODE!)
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Mappings.
+    -- Mappings. (See `:help vim.lsp.*` for documentation on any of the below functions)
     local opts = { noremap=true, silent=true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     buf_set_keymap('n', 'gi', '<Cmd>lua vim.lsp.buf.implementaion()<CR>', opts)
     buf_set_keymap('n', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('!', '<C-k>', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-
-    local t = function(str)
-      return vim.api.nvim_replace_termcodes(str, true, true, true)
-    end
-    
-    local check_back_space = function()
-        local col = vim.fn.col('.') - 1
-        if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-            return true
-        else
-            return false
-        end
-    end
-    
-    -- Use (s-)tab to:
-    --- move to prev/next item in completion menuone
-    --- jump to prev/next snippet's placeholder
-    _G.tab_complete = function()
-      if vim.fn.pumvisible() == 1 then
-        return t "<C-n>"
-      elseif check_back_space() then
-        return t "<Tab>"
-      else
-        return vim.fn['compe#complete']()
-      end
-    end
-    _G.s_tab_complete = function()
-      if vim.fn.pumvisible() == 1 then
-        return t "<C-p>"
-      else
-        return t "<S-Tab>"
-      end
-    end
-    
-    vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-    vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-    vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-    vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 
     -- LSP-dependent extensions
     vim.o.completeopt = "menuone,noselect"
@@ -134,8 +94,8 @@ local on_attach = function(client, bufnr)
         mapping = {
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-e>'] = cmp.mapping.close(),
           ['<CR>'] = cmp.mapping.confirm {
