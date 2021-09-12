@@ -30,9 +30,6 @@ local util = require('packer.util')
 require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
-        use { 'Mofiqul/vscode.nvim' }
-        use { 'morhetz/gruvbox' }
-        use { 'rakr/vim-one' }
         use { 'NLKNguyen/papercolor-theme' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
@@ -49,13 +46,6 @@ require('packer').startup({
 
 ----------------------------------------------------------------------------------------------------
 -- Themes
---vim.g.vscode_style = "light"
---vim.cmd[[colorscheme vscode]]
---vim.cmd[[au ColorScheme * highlight Whitespace ctermbg=NONE guibg=NONE ctermfg=Cyan guifg=#444444]]
---vim.cmd[[au ColorScheme * highlight Normal ctermbg=NONE guibg=NONE]]
---vim.cmd[[colorscheme gruvbox]]
---vim.cmd[[colorscheme one]]
---vim.cmd[[set background=light]]
 vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=light]]
 vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
