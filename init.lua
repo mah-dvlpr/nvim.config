@@ -181,7 +181,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'vscode',
+    theme = 'auto',
     component_separators = {'|', '|'},
     section_separators = {' ', ' '},
     disabled_filetypes = {}
