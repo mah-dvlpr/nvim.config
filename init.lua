@@ -188,10 +188,10 @@ require('lualine').setup({
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {''},
-    lualine_c = {'encoding','fileformat','filetype','filename'},
-    lualine_x = {'location','progress','diff'},
-    lualine_y = {''},
+    lualine_b = {'encoding','fileformat','filetype'},
+    lualine_c = {'filename'},
+    lualine_x = {'location','progress'},
+    lualine_y = {'diff'},
     lualine_z = {'branch'}
   },
   inactive_sections = {
