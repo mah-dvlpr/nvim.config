@@ -31,7 +31,7 @@ require('packer').startup({
     function ()
         use { 'wbthomason/packer.nvim' }
         use { 'NLKNguyen/papercolor-theme' }
-        use { 'neovim/nvim-lspconfig' , requires = { 'kabouzeid/nvim-lspinstall', 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
+        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
@@ -123,9 +123,8 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local lspinstall = require('lspinstall')
-lspinstall.setup()
-for _, lsp in ipairs(lspinstall.installed_servers()) do
+local servers = { 'clangd', 'rust_analyzer' }
+for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
       flags = {
