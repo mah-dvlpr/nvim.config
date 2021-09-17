@@ -42,7 +42,10 @@ require('packer').startup({
         compile_path = util.join_paths(vim.fn.stdpath('data'), 'plugin', 'packer_compiled.lua'),
     }
 })
-
+-- Check if plugins have been installed before continuing, otherwise exit (by checking that at least one of them is installed)
+if not pcall(require, 'lspconfig') then
+    return
+end
 
 ----------------------------------------------------------------------------------------------------
 -- Themes
