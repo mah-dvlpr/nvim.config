@@ -34,6 +34,7 @@ require('packer').startup({
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
+        use { 'romgrk/barbar.nvim' }
         use { 'tpope/vim-commentary' }
         use { 'hoob3rt/lualine.nvim' }
     end
@@ -143,10 +144,6 @@ require('nvim-treesitter.configs').setup({
     ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
     highlight = {
         enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
         additional_vim_regex_highlighting = false,
     },
 })
@@ -180,6 +177,48 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 
 
 ----------------------------------------------------------------------------------------------------
+-- romgrk/barbar.nvim
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Move to previous/next
+map('n', '<A-,>', ':BufferPrevious<CR>', opts)
+map('n', '<A-.>', ':BufferNext<CR>', opts)
+map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
+map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
+map('n', '<A-3>', ':BufferGoto 3<CR>', opts)
+map('n', '<A-4>', ':BufferGoto 4<CR>', opts)
+map('n', '<A-5>', ':BufferGoto 5<CR>', opts)
+map('n', '<A-6>', ':BufferGoto 6<CR>', opts)
+map('n', '<A-7>', ':BufferGoto 7<CR>', opts)
+map('n', '<A-8>', ':BufferGoto 8<CR>', opts)
+map('n', '<A-9>', ':BufferGoto 9<CR>', opts)
+map('n', '<A-0>', ':BufferLast<CR>', opts)
+map('n', '<A-w>', ':BufferClose<CR>', opts)
+
+vim.g.bufferline = {
+    animation = true,
+    auto_hide = true,
+    tabpages = true,
+    closable = true,
+    clickable = true,
+    icons = 'numbers',
+    icon_custom_colors = false,
+    icon_separator_active = '▎',
+    icon_separator_inactive = '▎',
+    icon_close_tab = 'x',
+    icon_close_tab_modified = '●',
+    icon_pinned = '#',
+    insert_at_end = true,
+    maximum_padding = 1,
+    maximum_length = 30,
+    semantic_letters = true,
+    letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
+    no_name_title = nil,
+}
+
+
+----------------------------------------------------------------------------------------------------
 -- hoob3rt/lualine.nvim
 require('lualine').setup({
   options = {
@@ -202,16 +241,8 @@ require('lualine').setup({
     lualine_x = {
         {
             'diagnostics',
-            -- table of diagnostic sources, available sources:
-            -- nvim_lsp, coc, ale, vim_lsp
             sources = {'nvim_lsp'},
-            -- displays diagnostics from defined severity
             sections = {'error', 'warn', 'info', 'hint'},
-            -- all colors are in format #rrggbb
-            --color_error = nil, -- changes diagnostic's error foreground color
-            --color_warn = nil, -- changes diagnostic's warn foreground color
-            --color_info = nil, -- Changes diagnostic's info foreground color
-            --color_hint = nil, -- Changes diagnostic's hint foreground color
             symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
        }
     },
