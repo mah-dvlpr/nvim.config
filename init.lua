@@ -38,7 +38,6 @@ require('packer').startup({
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
         use { 'akinsho/bufferline.nvim' }
-        use { 'kyazdani42/nvim-tree.lua' }
         use { 'hoob3rt/lualine.nvim' }
     end
     ,
@@ -203,54 +202,6 @@ vim.api.nvim_set_keymap('n', '<A-6>', '<Cmd>BufferLineGoToBuffer 6<Cr>', { norem
 vim.api.nvim_set_keymap('n', '<A-7>', '<Cmd>BufferLineGoToBuffer 7<Cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-8>', '<Cmd>BufferLineGoToBuffer 8<Cr>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<Cr>', { noremap = true })
-
-
-----------------------------------------------------------------------------------------------------
--- nvim-tree.lua
-vim.api.nvim_set_keymap('n', '<C-b>', '<Cmd>NvimTreeToggle<Cr>', { noremap = true })
-vim.g.nvim_tree_auto_open = 1
-vim.g.nvim_tree_auto_close = 1
-vim.g.nvim_tree_indent_markers = 1
-vim.g.nvim_tree_git_hl = 1
-vim.g.nvim_tree_highlight_opened_files = 1
-vim.g.nvim_tree_tab_open = 1
-vim.g.nvim_tree_auto_resize = 1
-vim.g.nvim_tree_lsp_diagnostics = 1
-vim.g.nvim_tree_show_icons = {
-    git = 1,
-    folders = 1,
-    files = 1,
-    folder_arrows = 1,
-}
-vim.g.nvim_tree_icons = {
-    default = '',
-    symlink = '',
-    git = {
-        unstaged = '✗',
-        staged = '✓',
-        unmerged = '±',
-        renamed = '➜',
-        untracked = '★',
-        deleted = '-',
-        ignored = 'i',
-    },
-    folder = {
-        arrow_open = '',
-        arrow_closed = '',
-        default = '',
-        open = '',
-        empty = '',
-        empty_open = '',
-        symlink = '',
-        symlink_open = '',
-    },
-    lsp = {
-        hint = 'H',
-        info = 'I',
-        warning = 'W',
-        error = 'E',
-    },
-}
 
 
 ----------------------------------------------------------------------------------------------------
