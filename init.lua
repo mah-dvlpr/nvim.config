@@ -206,7 +206,7 @@ vim.api.nvim_set_keymap('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<Cr>', { norem
 require('lualine').setup({
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'nord',
     component_separators = {'|', '|'},
     section_separators = {' ', ' '},
     disabled_filetypes = {}
