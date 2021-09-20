@@ -29,12 +29,17 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 local util = require('packer.util')
 require('packer').startup({
     function ()
+        -- Essential
         use { 'wbthomason/packer.nvim' }
-        use { 'NLKNguyen/papercolor-theme' }
         use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
+
+        -- Utilities
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
+
+        -- Look and Feel
+        use { 'NLKNguyen/papercolor-theme' }
         use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
@@ -48,12 +53,6 @@ require('packer').startup({
 if not pcall(require, 'lspconfig') then
     return
 end
-
-----------------------------------------------------------------------------------------------------
--- Themes
-vim.cmd[[colorscheme PaperColor]]
-vim.cmd[[set background=light]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -173,6 +172,14 @@ vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').old
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions()<Cr>", { noremap = true })
+
+
+----------------------------------------------------------------------------------------------------
+-- Themes
+vim.cmd[[colorscheme PaperColor]]
+vim.cmd[[set background=light]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
+
 
 ----------------------------------------------------------------------------------------------------
 -- akinsho/bufferline.nvim
