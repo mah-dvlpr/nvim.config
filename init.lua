@@ -35,6 +35,7 @@ require('packer').startup({
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'tpope/vim-commentary' }
+        use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
     end
     ,
@@ -173,6 +174,19 @@ vim.api.nvim_set_keymap('n', '<Leader>m', ":lua require('telescope.builtin').man
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions(require()<Cr>", { noremap = true })
+
+----------------------------------------------------------------------------------------------------
+-- akinsho/bufferline.nvim
+require('bufferline').setup{
+    options = {
+        buffer_close_icon = 'x',
+        close_icon = 'X',
+        left_trunk_marker = '<',
+        right_trunk_marker = '>',
+        diagnostics = 'nvim_lsp',
+        always_show_bufferline = true
+    }
+}
 
 
 ----------------------------------------------------------------------------------------------------
