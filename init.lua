@@ -14,7 +14,8 @@ vim.opt.tabstop = 4                       -- Length of an actual TAB, i.e. not w
 vim.opt.softtabstop = 4                   -- I have no idea what this does.
 vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
 vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
-vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large
+vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large.
+vim.opt.hidden = true                     -- Keep buffers open when switching between files.
 
 
 ----------------------------------------------------------------------------------------------------
@@ -187,6 +188,15 @@ require('bufferline').setup{
         always_show_bufferline = true
     }
 }
+vim.api.nvim_set_keymap('n', '<Leader>1', '<Cmd>BufferLineGoToBuffer 1', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>2', '<Cmd>BufferLineGoToBuffer 2', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>3', '<Cmd>BufferLineGoToBuffer 3', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>4', '<Cmd>BufferLineGoToBuffer 4', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>5', '<Cmd>BufferLineGoToBuffer 5', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>6', '<Cmd>BufferLineGoToBuffer 6', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>7', '<Cmd>BufferLineGoToBuffer 7', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>8', '<Cmd>BufferLineGoToBuffer 8', { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>9', '<Cmd>BufferLineGoToBuffer 9', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
