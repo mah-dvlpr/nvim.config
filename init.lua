@@ -192,9 +192,39 @@ require('lualine').setup({
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'encoding','fileformat','filetype'},
-    lualine_c = {'filename'},
-    lualine_x = {'location','progress'},
-    lualine_y = {'diff'},
+    lualine_c = {
+        {
+            'filename',
+            file_status = true, -- displays file status (readonly status, modified status)
+            path = 2 -- 0 = just filename, 1 = relative path, 2 = absolute path
+        }
+    },
+    lualine_x = {
+        {
+            'diagnostics',
+            -- table of diagnostic sources, available sources:
+            -- nvim_lsp, coc, ale, vim_lsp
+            sources = nvim_lsp,
+            -- displays diagnostics from defined severity
+            sections = {'error', 'warn', 'info', 'hint'},
+            -- all colors are in format #rrggbb
+            color_error = '#aa0000', -- changes diagnostic's error foreground color
+            color_warn = '#aaaa00', -- changes diagnostic's warn foreground color
+            color_info = '#000000', -- Changes diagnostic's info foreground color
+            color_hint = '#000000', -- Changes diagnostic's hint foreground color
+            symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
+       }
+    },
+    lualine_y = {
+        {
+            'diff',
+            colored = true,
+            color_added = '#00aa00',
+            color_modified = '#0000aa',
+            color_removed = '#aa0000',
+            symbols = { added = '+', modified = '~', removed = '-' }
+        }
+    },
     lualine_z = {'branch'}
   },
   inactive_sections = {
