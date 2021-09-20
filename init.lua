@@ -23,6 +23,7 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('n', 'J', '8j', { noremap = true })
 vim.api.nvim_set_keymap('n', 'K', '8k', { noremap = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
@@ -185,18 +186,20 @@ require('bufferline').setup{
         left_trunk_marker = '<',
         right_trunk_marker = '>',
         diagnostics = 'nvim_lsp',
-        always_show_bufferline = true
+        always_show_bufferline = true,
+        show_buffer_icons = false,
+        sorty_by = 'directory',
     }
 }
-vim.api.nvim_set_keymap('n', '<Leader>1', '<Cmd>BufferLineGoToBuffer 1<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>2', '<Cmd>BufferLineGoToBuffer 2<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>3', '<Cmd>BufferLineGoToBuffer 3<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>4', '<Cmd>BufferLineGoToBuffer 4<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>5', '<Cmd>BufferLineGoToBuffer 5<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>6', '<Cmd>BufferLineGoToBuffer 6<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>7', '<Cmd>BufferLineGoToBuffer 7<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>8', '<Cmd>BufferLineGoToBuffer 8<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>9', '<Cmd>BufferLineGoToBuffer 9<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-1>', '<Cmd>BufferLineGoToBuffer 1<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-2>', '<Cmd>BufferLineGoToBuffer 2<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-3>', '<Cmd>BufferLineGoToBuffer 3<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-4>', '<Cmd>BufferLineGoToBuffer 4<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-5>', '<Cmd>BufferLineGoToBuffer 5<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-6>', '<Cmd>BufferLineGoToBuffer 6<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-7>', '<Cmd>BufferLineGoToBuffer 7<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-8>', '<Cmd>BufferLineGoToBuffer 8<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<Cr>', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
