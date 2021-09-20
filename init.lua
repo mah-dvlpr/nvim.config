@@ -209,46 +209,33 @@ require('lualine').setup({
     theme = 'nord',
     component_separators = {'|', '|'},
     section_separators = {' ', ' '},
-    disabled_filetypes = {}
   },
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'encoding','fileformat','filetype'},
-    lualine_c = {
-        {
-            'filename',
-            file_status = true, -- displays file status (readonly status, modified status)
-            path = 2 -- 0 = just filename, 1 = relative path, 2 = absolute path
-        }
-    },
-    lualine_x = {
-        {
-            'diagnostics',
-            sources = {'nvim_lsp'},
-            sections = {'error', 'warn', 'info', 'hint'},
-            symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
-       }
-    },
-    lualine_y = {
-        {
-            'diff',
-            colored = true,
-            color_added = '#00aa00',
-            color_modified = '#0000aa',
-            color_removed = '#aa0000',
-            symbols = { added = '+', modified = '~', removed = '-' }
-        }
-    },
+    lualine_c = {{
+        'filename',
+        file_status = true, -- displays file status (readonly status, modified status)
+        path = 2 -- 0 = just filename, 1 = relative path, 2 = absolute path
+    }},
+    lualine_x = {{
+        'diagnostics',
+        sources = {'nvim_lsp'},
+        sections = {'error', 'warn', 'info', 'hint'},
+        symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
+    }},
+    lualine_y = {{
+        'diff',
+        colored = true,
+        color_added = '#00aa00',
+        color_modified = '#0000aa',
+        color_removed = '#aa0000',
+        symbols = { added = '+', modified = '~', removed = '-' }
+    }},
     lualine_z = {'branch'}
   },
   inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
     lualine_c = {'filename'},
     lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
   },
-  tabline = {},
-  extensions = {}
 })
