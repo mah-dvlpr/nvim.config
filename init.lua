@@ -21,8 +21,6 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 ----------------------------------------------------------------------------------------------------
 -- Global keymaps
 vim.g.mapleader = 'ö'
-vim.api.nvim_set_keymap('n', 'J', '8j', { noremap = true })
-vim.api.nvim_set_keymap('n', 'K', '8k', { noremap = true })
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 
@@ -39,6 +37,7 @@ require('packer').startup({
         use { 'tpope/vim-commentary' }
         use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
+        use { 'dstein64/nvim-scrollview' }
     end
     ,
     config = {
@@ -173,7 +172,7 @@ vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').fil
 vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').oldfiles()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions(require()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions()<Cr>", { noremap = true })
 
 ----------------------------------------------------------------------------------------------------
 -- akinsho/bufferline.nvim
@@ -222,6 +221,10 @@ require('lualine').setup({
         'diagnostics',
         sources = {'nvim_lsp'},
         sections = {'error', 'warn', 'info', 'hint'},
+        color_error = '#FF4444',
+        color_warn = '#FF8000',
+        color_info = '#FFFF00',
+        color_hint = '#FFFFFF',
         symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
     }},
     lualine_y = {{
