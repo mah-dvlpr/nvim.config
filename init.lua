@@ -227,9 +227,9 @@ require('lualine').setup({
     lualine_y = {{
         'diff',
         colored = true,
-        color_added = '#00aa00',
-        color_modified = '#0000aa',
-        color_removed = '#aa0000',
+        color_added = '#AAFF44',
+        color_modified = '#44AAFF',
+        color_removed = '#FF4444',
         symbols = { added = '+', modified = '~', removed = '-' }
     }},
     lualine_z = {'branch'}
