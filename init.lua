@@ -179,7 +179,6 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 -- akinsho/bufferline.nvim
 require('bufferline').setup{
     options = {
-        offsets = { { filetype = 'NvimTree', text = '', padding = 1 } },
         buffer_close_icon = 'x',
         close_icon = 'X',
         show_close_icon = false,
