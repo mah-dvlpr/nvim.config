@@ -36,6 +36,7 @@ require('packer').startup({
 
         -- Utilities
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
+        use { 'ray-x/lsp_signature.nvim' }
         use { 'tpope/vim-commentary' }
 
         -- Look and Feel
@@ -120,6 +121,14 @@ local on_attach = function(client, bufnr)
             { name = 'luasnip' },
         },
     }
+
+    require('lsp_signature').on_attach({
+        bind = true, -- This is mandatory, otherwise border config won't get registered.
+        handler_opts = {
+            border = 'single'
+        },
+        hint_prefix = '|>',
+    }, bufnr)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
