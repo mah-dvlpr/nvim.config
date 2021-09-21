@@ -22,6 +22,8 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 -- Global keymaps
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-q>', '<Cmd>bw<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('!', '<C-q>', '<Cmd>bw<Cr>', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
