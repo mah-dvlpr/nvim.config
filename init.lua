@@ -127,7 +127,8 @@ local on_attach = function(client, bufnr)
         handler_opts = {
             border = 'single'
         },
-        hint_prefix = '|>',
+        hint_enable = false,
+        hi_parameter = 'IncSearch',
     }, bufnr)
 end
 
