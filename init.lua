@@ -224,7 +224,7 @@ require('lualine').setup({
     icons_enabled = false,
     theme = 'nord',
     component_separators = {'|', '|'},
-    section_separators = {' ', ' '},
+    section_separators = {'', ''},
   },
   sections = {
     lualine_a = {'mode'},
