@@ -45,6 +45,7 @@ require('packer').startup({
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
         use { 'karb94/neoscroll.nvim' }
+        use { 'folke/twilight.nvim' }
     end
     ,
     config = {
@@ -188,7 +189,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 ----------------------------------------------------------------------------------------------------
 -- Themes
 vim.cmd[[colorscheme PaperColor]]
-vim.cmd[[set background=light]]
+vim.cmd[[set background=dark]]
 vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
 
 
@@ -277,3 +278,25 @@ require('neoscroll').setup({
     pre_hook = nil,              -- Function to run before the scrolling animation starts
     post_hook = nil,              -- Function to run after the scrolling animation ends
 })
+
+
+----------------------------------------------------------------------------------------------------
+-- folke/twilight.nvim
+vim.cmd[[au VimEnter * TwilightEnable]]
+require("twilight").setup {
+    dimming = {
+        alpha = 0.5, -- amount of dimming
+        -- we try to get the foreground from the highlight groups or fallback color
+        color = { "Normal", "#ffffff" },
+        inactive = true, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
+    },
+    context = 999, -- amount of lines we will try to show around the current line
+    treesitter = false,
+    expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
+        "function",
+        "method",
+        "table",
+        "if_statement",
+    },
+    exclude = {}, -- exclude these filetypes
+}
