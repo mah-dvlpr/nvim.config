@@ -21,10 +21,11 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 ----------------------------------------------------------------------------------------------------
 -- Global user config
 vim.g.mapleader = 'ö'
-
+vim.api.nvim_set_keymap('', '<C-b>c', '<Cmd>bw<Cr>', { noremap = true })
 -- Terminal stuff
 vim.api.nvim_set_keymap('', '<C-t>', '<Cmd>term<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N><Bar><Cmd>bw!<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-t>', '<C-\\><C-N><Bar><Cmd>bw!<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 vim.cmd[[au TermOpen * startinsert]]
 
 
