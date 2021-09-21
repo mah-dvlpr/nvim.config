@@ -22,8 +22,6 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 -- Global keymaps
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-q>', '<Cmd>bw<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('!', '<C-q>', '<Cmd>bw<Cr>', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
@@ -138,7 +136,8 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'clangd', 'rust_analyzer' }
+-- Full list of supported LSP's can be found at: https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md
+local servers = { 'clangd', 'rust_analyzer', 'pyright' }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
@@ -183,6 +182,7 @@ vim.api.nvim_set_keymap('n', '<Leader>f', ":lua require('telescope.builtin').fin
 vim.api.nvim_set_keymap('n', '<Leader>g', ":lua require('telescope.builtin').live_grep()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').file_browser()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').oldfiles()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>h', ":lua require('telescope.builtin').help_tags()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions()<Cr>", { noremap = true })
@@ -191,7 +191,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 ----------------------------------------------------------------------------------------------------
 -- Themes
 vim.cmd[[colorscheme PaperColor]]
-vim.cmd[[set background=dark]]
+vim.cmd[[set background=light]]
 vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
 
 
@@ -297,8 +297,6 @@ require("twilight").setup {
     expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
         "function",
         "method",
-        "table",
-        "if_statement",
     },
     exclude = {}, -- exclude these filetypes
 }
