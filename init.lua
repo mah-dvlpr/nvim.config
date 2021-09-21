@@ -191,7 +191,7 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 ----------------------------------------------------------------------------------------------------
 -- Themes
 vim.cmd[[colorscheme PaperColor]]
-vim.cmd[[set background=light]]
+vim.cmd[[set background=dark]]
 vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
 
 
