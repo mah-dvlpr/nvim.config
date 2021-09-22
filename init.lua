@@ -22,11 +22,6 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 -- Global user config
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bw<Cr>', { noremap = true })
--- Terminal stuff
-vim.api.nvim_set_keymap('', '<C-t>', '<Cmd>term<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('t', '<C-t>', '<C-\\><C-N><Bar><Cmd>bw!<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
-vim.cmd[[au TermOpen * startinsert]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -44,6 +39,7 @@ require('packer').startup({
         use { 'ray-x/lsp_signature.nvim' }
         use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } }
         use { 'tpope/vim-commentary' }
+        use { 'akinsho/toggleterm.nvim' }
 
         -- Look and Feel
         use { 'NLKNguyen/papercolor-theme' }
@@ -194,6 +190,39 @@ vim.api.nvim_set_keymap('n', '<Leader>h', ":lua require('telescope.builtin').hel
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>d', ":lua require('telescope.builtin').lsp_document_diagnostics()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp_code_actions()<Cr>", { noremap = true })
+
+
+----------------------------------------------------------------------------------------------------
+-- akinsho/toggleterm.nvim
+require("toggleterm").setup({
+    -- size can be a number or function which is passed the current terminal
+    size = 20,
+    open_mapping = [[<c-\>]],
+    hide_numbers = true, -- hide the number column in toggleterm buffers
+    shade_filetypes = {},
+    shade_terminals = true,
+    shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+    start_in_insert = true,
+    insert_mappings = true, -- whether or not the open mapping applies in insert mode
+    persist_size = true,
+    direction = 'float',
+    close_on_exit = true, -- close the terminal window when the process exits
+    shell = vim.o.shell, -- change the default shell
+    -- This field is only relevant if direction is set to 'float'
+    float_opts = {
+        border = 'single',
+        width = 128,
+        height = 32,
+        winblend = 10,
+        highlights = {
+            border = "Normal",
+            background = "Normal",
+        }
+    }
+})
+vim.api.nvim_set_keymap('', '<C-t>', '<Cmd>ToggleTerm<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<C-t>', '<C-\\><C-N><Bar><Cmd>ToggleTerm<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
