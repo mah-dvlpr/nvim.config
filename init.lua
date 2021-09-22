@@ -60,6 +60,7 @@ require('packer').startup({
         use { 'akinsho/toggleterm.nvim' }
 
         -- Look and Feel
+        use { 'folke/lsp-colors.nvim' }
         use { 'NLKNguyen/papercolor-theme' }
         use { 'tomasiser/vim-code-dark' }
         use { 'morhetz/gruvbox' }
@@ -247,10 +248,16 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 ----------------------------------------------------------------------------------------------------
 -- Theme stuff
+require("lsp-colors").setup({
+  Error = "#db4b4b",
+  Warning = "#e0af68",
+  Information = "#0db9d7",
+  Hint = "#10B981"
+})
 vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=dark]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]] --'transparent_background': 1
-vim.cmd[[au ColorScheme gruvbox hi Normal ctermbg=None guibg=None]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0, 'transparent_background': 1}}}]]
+vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]]
 
 
 ----------------------------------------------------------------------------------------------------
