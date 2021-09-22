@@ -209,7 +209,8 @@ require('telescope').setup{
 }
 vim.api.nvim_set_keymap('n', '<Leader>f', ":lua require('telescope.builtin').find_files()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>g', ":lua require('telescope.builtin').live_grep()<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').file_browser()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>e', ":lua require('telescope.builtin').file_browser()<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('n', '<Leader>b', ":lua require('telescope.builtin').buffers()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>o', ":lua require('telescope.builtin').oldfiles()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>h', ":lua require('telescope.builtin').help_tags()<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ":lua require('telescope.builtin').lsp_references()<Cr>", { noremap = true })
