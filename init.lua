@@ -72,7 +72,7 @@ require('packer').startup({
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
         use { 'karb94/neoscroll.nvim' }
-        use { 'folke/twilight.nvim' }
+        use { 'sunjon/Shade.nvim' }
     end
     ,
     config = {
@@ -356,20 +356,13 @@ require('neoscroll').setup({
 
 
 ----------------------------------------------------------------------------------------------------
--- folke/twilight.nvim
-vim.cmd[[au VimEnter * TwilightEnable]]
-require('twilight').setup {
-    dimming = {
-        alpha = 0.5, -- amount of dimming
-        -- we try to get the foreground from the highlight groups or fallback color
-        color = { 'Normal', '#ffffff' },
-        inactive = true, -- when true, other windows will be fully dimmed (unless they contain the same buffer)
-    },
-    context = 999, -- amount of lines we will try to show around the current line
-    treesitter = false,
-    expand = { -- for treesitter, we we always try to expand to the top-most ancestor with these types
-        'function',
-        'method',
-    },
-    exclude = {}, -- exclude these filetypes
-}
+-- sunjon/Shade.nvim
+require('shade').setup({
+  overlay_opacity = 50,
+  opacity_step = 1,
+  keys = {
+    brightness_up    = '<A-Up>',
+    brightness_down  = '<A-Down>',
+    toggle           = '<A-s>',
+  }
+})
