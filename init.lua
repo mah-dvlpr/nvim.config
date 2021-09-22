@@ -36,12 +36,13 @@ require('packer').startup({
     function ()
         -- Essential
         use { 'wbthomason/packer.nvim' }
-        use { 'neovim/nvim-lspconfig' , requires = { 'hrsh7th/nvim-cmp', 'hrsh7th/cmp-nvim-lsp' } }
+        use { 'neovim/nvim-lspconfig' }
         use { 'nvim-treesitter/nvim-treesitter' , run = function() vim.cmd[[TSUpdate]]; end }
 
         -- Utilities
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'ray-x/lsp_signature.nvim' }
+        use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } }
         use { 'tpope/vim-commentary' }
 
         -- Look and Feel
