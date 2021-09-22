@@ -36,6 +36,7 @@ transp_bg = function (arg)
         os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
     elseif arg == 'reset' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
+        os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
         vim.cmd[[execute 'colo' g:colors_name]]
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
