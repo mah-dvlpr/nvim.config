@@ -46,6 +46,7 @@ transp_bg = function (arg)
         os.execute('wmctrl -a nvim >/dev/null 2>&1')
     end
 end
+vim.cmd[[au VimLeave * lua os.execute('while pkill mpv >/dev/null 2>&1; do :; done')]]
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
