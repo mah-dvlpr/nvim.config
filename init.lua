@@ -38,6 +38,7 @@ require('packer').startup({
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'ray-x/lsp_signature.nvim' }
         use { 'hrsh7th/nvim-cmp', requires = { 'hrsh7th/cmp-nvim-lsp' } }
+        use { 'L3MON4D3/LuaSnip', requires = { 'saadparwaiz1/cmp_luasnip' } }
         use { 'tpope/vim-commentary' }
         use { 'akinsho/toggleterm.nvim' }
 
@@ -85,6 +86,7 @@ local on_attach = function(client, bufnr)
 
     -- LSP-dependent extensions
     vim.o.completeopt = "menuone,noselect"
+    local luasnip = require('luasnip')
     local cmp = require('cmp')
     cmp.setup {
         snippet = {
@@ -147,7 +149,8 @@ for _, lsp in ipairs(servers) do
       on_attach = on_attach,
       flags = {
         debounce_text_changes = 150,
-      }
+      },
+    capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     }
 end
 
