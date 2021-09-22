@@ -23,10 +23,10 @@ vim.opt.scrolloff = 16                    -- Keep cursor centered by making the 
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bd<Cr>', { noremap = true, silent = true })
 -- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
-if not os.execute('mpv --version') then
+if not os.execute('mpv --version >/dev/null 2>&1') then
     error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
 end
-if not os.execute('wmctrl --version') then
+if not os.execute('wmctrl --version >/dev/null 2>&1') then
     error("Wmctrl ('wmctrl') is not installed.")
 end
 transp_bg = function (arg)
@@ -39,10 +39,10 @@ transp_bg = function (arg)
         vim.cmd[[execute 'colo' g:colors_name]]
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('while pkill mpv &>/dev/null; do :; done')
-        os.execute('while wmctrl -l | grep mpv &>/dev/null; do :; done')
-        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null & while ! wmctrl -l | grep mpv &>/dev/null; do :; done')
-        os.execute('wmctrl -a nvim')
+        os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
+        os.execute('while wmctrl -l | grep mpv >/dev/null 2>&1; do :; done')
+        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs >/dev/null 2>&1 & while ! wmctrl -l | grep mpv >/dev/null 2>&1; do :; done')
+        os.execute('wmctrl -a nvim >/dev/null 2>&1')
     end
 end
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
@@ -183,7 +183,7 @@ end
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-treesitter/nvim-treesitter
-if not os.execute('c++ --version') then
+if not os.execute('c++ --version >/dev/null 2>&1') then
     error("C++ compiler package ('gcc-c++') is not installed. Installing languages in/with treesitter will not work (fail to compile).")
 end
 require('nvim-treesitter.configs').setup({
@@ -197,7 +197,7 @@ require('nvim-treesitter.configs').setup({
 
 ----------------------------------------------------------------------------------------------------
 -- nvim-telescope/telescope.nvim
-if not os.execute('rg --version') then
+if not os.execute('rg --version >/dev/null 2>&1') then
     error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work.")
 end
 local actions = require('telescope.actions')
