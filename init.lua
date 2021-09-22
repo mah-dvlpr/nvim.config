@@ -68,11 +68,9 @@ require('packer').startup({
         use { 'NLKNguyen/papercolor-theme' }
         use { 'tomasiser/vim-code-dark' }
         use { 'morhetz/gruvbox' }
-        use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
         use { 'karb94/neoscroll.nvim' }
-        use { 'sunjon/Shade.nvim' }
     end
     ,
     config = {
@@ -270,32 +268,6 @@ vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]]
 
 
 ----------------------------------------------------------------------------------------------------
--- akinsho/bufferline.nvim
-require('bufferline').setup{
-    options = {
-        buffer_close_icon = 'x',
-        close_icon = 'X',
-        show_close_icon = false,
-        left_trunk_marker = '<',
-        right_trunk_marker = '>',
-        diagnostics = 'nvim_lsp',
-        always_show_bufferline = true,
-        show_buffer_icons = false,
-        sorty_by = 'directory',
-    },
-}
-vim.api.nvim_set_keymap('n', '<A-1>', '<Cmd>BufferLineGoToBuffer 1<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-2>', '<Cmd>BufferLineGoToBuffer 2<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-3>', '<Cmd>BufferLineGoToBuffer 3<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-4>', '<Cmd>BufferLineGoToBuffer 4<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-5>', '<Cmd>BufferLineGoToBuffer 5<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-6>', '<Cmd>BufferLineGoToBuffer 6<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-7>', '<Cmd>BufferLineGoToBuffer 7<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-8>', '<Cmd>BufferLineGoToBuffer 8<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<A-9>', '<Cmd>BufferLineGoToBuffer 9<Cr>', { noremap = true })
-
-
-----------------------------------------------------------------------------------------------------
 -- hoob3rt/lualine.nvim
 require('lualine').setup({
   options = {
@@ -353,17 +325,4 @@ require('neoscroll').setup({
     easing_function = 'quadratic',        -- Default easing function
     pre_hook = nil,              -- Function to run before the scrolling animation starts
     post_hook = nil,              -- Function to run after the scrolling animation ends
-})
-
-
-----------------------------------------------------------------------------------------------------
--- sunjon/Shade.nvim
-require('shade').setup({
-  overlay_opacity = 50,
-  opacity_step = 1,
-  keys = {
-    brightness_up    = '<A-Up>',
-    brightness_down  = '<A-Down>',
-    toggle           = '<A-s>',
-  }
 })
