@@ -60,7 +60,8 @@ require('packer').startup({
         use { 'akinsho/toggleterm.nvim' }
 
         -- Look and Feel
-        use { 'projekt0n/github-nvim-theme' }
+        use { 'NLKNguyen/papercolor-theme' }
+        use { 'tomasiser/vim-code-dark' }
         use { 'morhetz/gruvbox' }
         use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
@@ -246,9 +247,10 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 ----------------------------------------------------------------------------------------------------
 -- Theme stuff
-require("github-theme").setup({
-    theme_style = "dark",
-})
+vim.cmd[[colorscheme PaperColor]]
+vim.cmd[[set background=dark]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]] --'transparent_background': 1
+vim.cmd[[au ColorScheme gruvbox hi Normal ctermbg=None guibg=None]]
 
 
 ----------------------------------------------------------------------------------------------------
