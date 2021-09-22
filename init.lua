@@ -22,6 +22,23 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 -- Global user config
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bw<Cr>', { noremap = true })
+-- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
+transp_bg = function (arg)
+    vim.cmd[[hi Normal ctermbg=None guibg=None]]
+    local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
+    if arg == '+' or arg == '-' then
+        os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
+    elseif arg == 'reset' then
+        os.execute('dconf write ' .. addr .. ' ' .. 20)
+        vim.cmd[[execute 'colo' g:colors_name]]
+    elseif arg == 'full' then
+        os.execute('dconf write ' .. addr .. ' ' .. 100)
+    end
+end
+vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg('full')<Cr>", { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
@@ -235,8 +252,8 @@ require("github-theme").setup({
 })
 vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=dark]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]] --'transparent_background': 1
-vim.cmd[[au ColorScheme gruvbox hi Normal ctermbg=None guibg=None]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]--, 'transparent_background':1}}}]]
+-- vim.cmd[[au ColorScheme * :lua current_bg = vim.cmd([[echo synIDattr(hlID("Normal"), "bg")]])]]
 
 
 ----------------------------------------------------------------------------------------------------
