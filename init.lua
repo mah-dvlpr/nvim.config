@@ -42,10 +42,13 @@ require('packer').startup({
         -- Utilities
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'ray-x/lsp_signature.nvim' }
+        use { 'L3MON4D3/LuaSnip' }
         use { 'tpope/vim-commentary' }
 
         -- Look and Feel
         use { 'NLKNguyen/papercolor-theme' }
+        use { 'projekt0n/github-nvim-theme' }
+        use { 'morhetz/gruvbox' }
         use { 'akinsho/bufferline.nvim' }
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
@@ -194,10 +197,14 @@ vim.api.nvim_set_keymap('n', '<Leader>a', ":lua require('telescope.builtin').lsp
 
 
 ----------------------------------------------------------------------------------------------------
--- Themes
+-- Theme stuff
+require("github-theme").setup({
+    theme_style = "dark",
+})
 vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=dark]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]] --'transparent_background': 1
+vim.cmd[[au ColorScheme gruvbox hi Normal ctermbg=None guibg=None]]
 
 
 ----------------------------------------------------------------------------------------------------
