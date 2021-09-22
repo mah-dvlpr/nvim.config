@@ -15,13 +15,13 @@ vim.opt.softtabstop = 4                   -- I have no idea what this does.
 vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
 vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large.
-vim.opt.hidden = true                     -- Keep buffers open when switching between files.
+--vim.opt.hidden = true                     -- Keep buffers open when switching between files.
 
 
 ----------------------------------------------------------------------------------------------------
 -- Global user config
 vim.g.mapleader = 'ö'
-vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bw<Cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bd<Cr>', { noremap = true, silent = true })
 -- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
 if not os.execute('mpv --version') then
     error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
