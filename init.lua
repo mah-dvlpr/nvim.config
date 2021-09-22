@@ -252,8 +252,8 @@ require("github-theme").setup({
 })
 vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=dark]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0}}}]]--, 'transparent_background':1}}}]]
--- vim.cmd[[au ColorScheme * :lua current_bg = vim.cmd([[echo synIDattr(hlID("Normal"), "bg")]])]]
+vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0, 'transparent_background':1}}}]]
+vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]] -- Papercolor is annoying, this together with the transparency option (above) removes issues with whitespace being rendered with different background color
 
 
 ----------------------------------------------------------------------------------------------------
