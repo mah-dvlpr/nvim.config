@@ -40,8 +40,8 @@ transp_bg = function (arg)
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
-        os.execute('while wmctrl -l | grep mpv >/dev/null 2>&1; do :; done')
-        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs >/dev/null 2>&1 & while ! wmctrl -l | grep mpv >/dev/null 2>&1; do :; done')
+        os.execute('while wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
+        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs >/dev/null 2>&1 & while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
         os.execute('wmctrl -a nvim >/dev/null 2>&1')
     end
 end
