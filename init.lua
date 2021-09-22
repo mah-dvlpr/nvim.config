@@ -26,6 +26,9 @@ vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bd<Cr>', { noremap = true, silen
 if not os.execute('mpv --version') then
     error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
 end
+if not os.execute('wmctrl --version') then
+    error("Wmctrl ('wmctrl') is not installed.")
+end
 transp_bg = function (arg)
     vim.cmd[[hi Normal ctermbg=None guibg=None]]
     local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
@@ -36,7 +39,9 @@ transp_bg = function (arg)
         vim.cmd[[execute 'colo' g:colors_name]]
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
+        os.execute('pkill mpv')
         os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null &')
+        os.execute('sleep 2 && wmctrl -a nvim')
     end
 end
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
