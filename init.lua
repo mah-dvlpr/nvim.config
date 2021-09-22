@@ -39,8 +39,9 @@ transp_bg = function (arg)
         vim.cmd[[execute 'colo' g:colors_name]]
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('pkill mpv')
-        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null & while [ ! $(wmctrl -l | grep mpv) ]; do :; done')
+        os.execute('while pkill mpv &>/dev/null; do :; done')
+        os.execute('while wmctrl -l | grep mpv &>/dev/null; do :; done')
+        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null & while ! wmctrl -l | grep mpv &>/dev/null; do :; done')
         os.execute('wmctrl -a nvim')
     end
 end
