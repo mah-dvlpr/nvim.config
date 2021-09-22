@@ -40,8 +40,8 @@ transp_bg = function (arg)
     elseif arg == 'screensaver' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         os.execute('pkill mpv')
-        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null &')
-        os.execute('sleep 2 && wmctrl -a nvim')
+        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs &>/dev/null & while [ ! $(wmctrl -l | grep mpv) ]; do :; done')
+        os.execute('wmctrl -a nvim')
     end
 end
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
