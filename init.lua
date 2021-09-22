@@ -21,8 +21,11 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 ----------------------------------------------------------------------------------------------------
 -- Global user config
 vim.g.mapleader = 'ö'
-vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bw<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bw<Cr>', { noremap = true, silent = true })
 -- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
+if not os.execute('mpv --version') then
+    error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
+end
 transp_bg = function (arg)
     vim.cmd[[hi Normal ctermbg=None guibg=None]]
     local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
@@ -31,14 +34,15 @@ transp_bg = function (arg)
     elseif arg == 'reset' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         vim.cmd[[execute 'colo' g:colors_name]]
-    elseif arg == 'full' then
-        os.execute('dconf write ' .. addr .. ' ' .. 100)
+    elseif arg == 'screensaver' then
+        os.execute('dconf write ' .. addr .. ' ' .. 20)
+        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio -fs &>/dev/null &')
     end
 end
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg('full')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg('screensaver')<Cr>", { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
@@ -248,6 +252,10 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 ----------------------------------------------------------------------------------------------------
 -- Theme stuff
+-- Live wallappers (screensaver videos):
+-- https://www.youtube.com/watch?v=lH6qlF_iegU
+-- https://www.youtube.com/watch?v=G2CHyuF74R0
+-- https://www.youtube.com/watch?v=J2qDRJdTGow (Annoying but a little fun)
 require("lsp-colors").setup({
   Error = "#db4b4b",
   Warning = "#e0af68",
