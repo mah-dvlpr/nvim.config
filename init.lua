@@ -42,7 +42,6 @@ require('packer').startup({
         -- Utilities
         use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim' } }
         use { 'ray-x/lsp_signature.nvim' }
-        use { 'L3MON4D3/LuaSnip' }
         use { 'tpope/vim-commentary' }
 
         -- Look and Feel
