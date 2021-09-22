@@ -60,7 +60,6 @@ require('packer').startup({
         use { 'akinsho/toggleterm.nvim' }
 
         -- Look and Feel
-        use { 'NLKNguyen/papercolor-theme' }
         use { 'projekt0n/github-nvim-theme' }
         use { 'morhetz/gruvbox' }
         use { 'akinsho/bufferline.nvim' }
@@ -250,10 +249,6 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 require("github-theme").setup({
     theme_style = "dark",
 })
-vim.cmd[[colorscheme PaperColor]]
-vim.cmd[[set background=dark]]
-vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0, 'transparent_background':1}}}]]
-vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]] -- Papercolor is annoying, this together with the transparency option (above) removes issues with whitespace being rendered with different background color
 
 
 ----------------------------------------------------------------------------------------------------
