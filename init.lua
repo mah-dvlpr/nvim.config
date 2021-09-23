@@ -15,13 +15,15 @@ vim.opt.softtabstop = 4                   -- I have no idea what this does.
 vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
 vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large.
---vim.opt.hidden = true                     -- Keep buffers open when switching between files.
+vim.opt.hidden = true                     -- Keep buffers open when switching between files.
 
 
 ----------------------------------------------------------------------------------------------------
 -- Global user config
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bd<Cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', 'J', '8j', { noremap = true })
+vim.api.nvim_set_keymap('', 'K', '8k', { noremap = true })
 -- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
 if not os.execute('mpv --version >/dev/null 2>&1') then
     error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
@@ -39,11 +41,15 @@ transp_bg = function (arg)
         os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
         vim.cmd[[execute 'colo' g:colors_name]]
     elseif arg == 'screensaver' then
+        -- Live wallappers (screensaver videos):
+        -- https://www.youtube.com/watch?v=lH6qlF_iegU
+        -- https://www.youtube.com/watch?v=G2CHyuF74R0
+        -- https://www.youtube.com/watch?v=J2qDRJdTGow (Annoying but a little fun)
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
         os.execute('while wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
         os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs >/dev/null 2>&1 & while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
-        os.execute('wmctrl -a nvim >/dev/null 2>&1')
+        os.execute('wmctrl -a ${PWD##*/} >/dev/null 2>&1')
     end
 end
 vim.cmd[[au VimLeave * lua os.execute('while pkill mpv >/dev/null 2>&1; do :; done')]]
@@ -205,7 +211,7 @@ end
 local actions = require('telescope.actions')
 require('telescope').setup{
     defaults = {
-        --layout_strategy = 'vertical',
+        layout_strategy = 'vertical',
         mappings = {
           i = {
             ["<esc>"] = actions.close
@@ -259,10 +265,6 @@ vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-N>', { noremap = true })
 
 ----------------------------------------------------------------------------------------------------
 -- Theme stuff
--- Live wallappers (screensaver videos):
--- https://www.youtube.com/watch?v=lH6qlF_iegU
--- https://www.youtube.com/watch?v=G2CHyuF74R0
--- https://www.youtube.com/watch?v=J2qDRJdTGow (Annoying but a little fun)
 require("lsp-colors").setup({
   Error = "#db4b4b",
   Warning = "#e0af68",
