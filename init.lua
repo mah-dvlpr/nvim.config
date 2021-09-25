@@ -21,7 +21,7 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 ----------------------------------------------------------------------------------------------------
 -- Global user config
 vim.g.mapleader = 'ö'
-vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bd<Cr>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bp<Bar>bw #<Cr>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('', 'J', '8j', { noremap = true })
 vim.api.nvim_set_keymap('', 'K', '8k', { noremap = true })
 -- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
