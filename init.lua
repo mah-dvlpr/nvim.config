@@ -51,12 +51,11 @@ function transp_bg (arg)
         os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
     elseif arg == 'reset' then
         os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
+        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
         vim.cmd[[execute 'colo' g:colors_name]]
     else
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
-        os.execute('timeout ' .. timeout .. ' bash -c "while wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
         os.execute('mpv "' .. transp_bg_wallpapers[transp_bg_wallpapers_index] .. '" --no-audio --loop -fs >/dev/null 2>&1 & timeout ' .. timeout .. ' bash -c "while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
         os.execute('wmctrl -a ${PWD##*/} >/dev/null 2>&1')
         transp_bg_wallpapers_index = transp_bg_wallpapers_index % transp_bg_wallpapers_index_max + 1
