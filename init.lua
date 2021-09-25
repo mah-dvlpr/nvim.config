@@ -39,8 +39,10 @@ local transp_bg_wallpapers = {
 local transp_bg_wallpapers_index = 1;
 function transp_bg (arg)
     vim.cmd[[hi Normal ctermbg=None guibg=None]]
+
     local timeout = 5
     local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
+
     if arg == '+' or arg == '-' then
         os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
     elseif arg == 'reset' then
