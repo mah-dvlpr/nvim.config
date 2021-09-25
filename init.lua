@@ -31,8 +31,15 @@ end
 if not os.execute('wmctrl --version >/dev/null 2>&1') then
     error("Wmctrl ('wmctrl') is not installed.")
 end
-transp_bg = function (arg)
+local transp_bg_wallpapers = {
+    'https://www.youtube.com/watch?v=lH6qlF_iegU',
+    'https://www.youtube.com/watch?v=G2CHyuF74R0',
+    'https://www.youtube.com/watch?v=J2qDRJdTGow',
+}
+local transp_bg_wallpapers_index = 1;
+function transp_bg (arg)
     vim.cmd[[hi Normal ctermbg=None guibg=None]]
+    local timeout = 5
     local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
     if arg == '+' or arg == '-' then
         os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
@@ -40,23 +47,20 @@ transp_bg = function (arg)
         os.execute('dconf write ' .. addr .. ' ' .. 20)
         os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
         vim.cmd[[execute 'colo' g:colors_name]]
-    elseif arg == 'screensaver' then
-        -- Live wallappers (screensaver videos):
-        -- https://www.youtube.com/watch?v=lH6qlF_iegU
-        -- https://www.youtube.com/watch?v=G2CHyuF74R0
-        -- https://www.youtube.com/watch?v=J2qDRJdTGow (Annoying but a little fun)
+    else
         os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('while pkill mpv >/dev/null 2>&1; do :; done')
-        os.execute('while wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
-        os.execute('mpv https://www.youtube.com/watch?v=lH6qlF_iegU --no-audio --loop -fs >/dev/null 2>&1 & while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done')
+        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
+        os.execute('timeout ' .. timeout .. ' bash -c "while wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
+        os.execute('mpv "' .. transp_bg_wallpapers[transp_bg_wallpapers_index] .. '" --no-audio --loop -fs >/dev/null 2>&1 & timeout ' .. timeout .. ' bash -c "while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
         os.execute('wmctrl -a ${PWD##*/} >/dev/null 2>&1')
+        transp_bg_wallpapers_index = transp_bg_wallpapers_index % 3 + 1
     end
 end
 vim.cmd[[au VimLeave * lua os.execute('while pkill mpv >/dev/null 2>&1; do :; done')]]
 vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
 vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg('screensaver')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg()<Cr>", { noremap = true })
 
 
 ----------------------------------------------------------------------------------------------------
