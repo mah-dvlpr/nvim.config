@@ -28,7 +28,7 @@ vim.api.nvim_set_keymap('', 'J', '8j', { noremap = true })
 vim.api.nvim_set_keymap('', 'K', '8k', { noremap = true })
 
 -- Save/Load sessions
-vim.cmd[[au VimLeave * mks!]]
+vim.cmd[[au VimLeave * mks! ~/.local/share/nvim/Session.vim]]
 -- vim.cmd[[au VimEnter * so Session.vim]]
 
 
@@ -254,7 +254,7 @@ require('lualine').setup({
   options = {
     icons_enabled = false,
     theme = 'nord',
-    component_separators = {'|', '|'},
+    component_separators = {'❯', '❮'},
     section_separators = {'', ''},
   },
   sections = {
