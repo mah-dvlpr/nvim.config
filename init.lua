@@ -55,7 +55,6 @@ require('packer').startup({
         use { 'NLKNguyen/papercolor-theme' }
         use { 'tomasiser/vim-code-dark' }
         use { 'morhetz/gruvbox' }
-        use { 'romgrk/nvim-treesitter-context' }
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
     end
@@ -247,27 +246,6 @@ vim.cmd[[colorscheme PaperColor]]
 vim.cmd[[set background=dark]]
 vim.cmd[[let g:PaperColor_Theme_Options={'theme':{'default':{'allow_bold':0, 'transparent_background': 1}}}]]
 vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]]
-
-
-----------------------------------------------------------------------------------------------------
--- romgrk/nvim-treesitter-context
-require'treesitter-context'.setup{
-    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-    throttle = true, -- Throttles plugin updates (may improve performance)
-    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-        default = {
-            'class',
-            'function',
-            'method',
-        },
-        -- Example for a specific filetype.
-        -- If a pattern is missing, *open a PR* so everyone can benefit.
-        --   rust = {
-        --       'impl_item',
-        --   },
-    },
-}
 
 
 ----------------------------------------------------------------------------------------------------
