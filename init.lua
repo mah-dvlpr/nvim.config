@@ -22,50 +22,14 @@ vim.opt.hidden = true                     -- Keep buffers open when switching be
 -- Global user config
 vim.g.mapleader = 'ö'
 vim.api.nvim_set_keymap('', '<C-w><C-b>', '<Cmd>bp<Bar>bw #<Cr>', { noremap = true, silent = true })
+
+-- "Sprint mode"
 vim.api.nvim_set_keymap('', 'J', '8j', { noremap = true })
 vim.api.nvim_set_keymap('', 'K', '8k', { noremap = true })
--- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
-if not os.execute('mpv --version >/dev/null 2>&1') then
-    error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
-end
-if not os.execute('wmctrl --version >/dev/null 2>&1') then
-    error("Wmctrl ('wmctrl') is not installed.")
-end
-local transp_bg_wallpapers = {
-    'https://www.youtube.com/watch?v=lH6qlF_iegU',
-    'https://www.youtube.com/watch?v=G2CHyuF74R0',
-    'https://www.youtube.com/watch?v=J2qDRJdTGow',
-}
-local transp_bg_wallpapers_index = 1
-transp_bg_wallpapers_index_max = 0
-for _ in pairs(transp_bg_wallpapers) do
-    transp_bg_wallpapers_index_max = transp_bg_wallpapers_index_max + 1
-end
-function transp_bg (arg)
-    vim.cmd[[hi Normal ctermbg=None guibg=None]]
 
-    local timeout = 5
-    local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
-
-    if arg == '+' or arg == '-' then
-        os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
-    elseif arg == 'reset' then
-        os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
-        vim.cmd[[execute 'colo' g:colors_name]]
-    else
-        os.execute('dconf write ' .. addr .. ' ' .. 20)
-        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
-        os.execute('mpv "' .. transp_bg_wallpapers[transp_bg_wallpapers_index] .. '" --no-audio --loop -fs >/dev/null 2>&1 & timeout ' .. timeout .. ' bash -c "while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
-        os.execute('wmctrl -a ${PWD##*/} >/dev/null 2>&1')
-        transp_bg_wallpapers_index = transp_bg_wallpapers_index % transp_bg_wallpapers_index_max + 1
-    end
-end
-vim.cmd[[au VimLeave * lua os.execute('while pkill mpv >/dev/null 2>&1; do :; done')]]
-vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
-vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg()<Cr>", { noremap = true })
+-- Save/Load sessions
+vim.cmd[[au VimLeave * mks!]]
+-- vim.cmd[[au VimEnter * so Session.vim]]
 
 
 ----------------------------------------------------------------------------------------------------
@@ -202,7 +166,7 @@ if not os.execute('c++ --version >/dev/null 2>&1') then
     error("C++ compiler package ('gcc-c++') is not installed. Installing languages in/with treesitter will not work (fail to compile).")
 end
 require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
+     ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -326,3 +290,49 @@ require('lualine').setup({
     lualine_x = {'location'},
   },
 })
+
+
+----------------------------------------------------------------------------------------------------
+-- Custom "Plugins" (Can be seen as superfluous junk, but it is a bit of fun)
+-- Transparent background stuff (ONLY WORKS WITH GNOME TERMINAL!)
+if not os.execute('mpv --version >/dev/null 2>&1') then
+    error("Mpv ('mpv') is not installed. Live wallpaper(s) will not be available.")
+end
+if not os.execute('wmctrl --version >/dev/null 2>&1') then
+    error("Wmctrl ('wmctrl') is not installed.")
+end
+local transp_bg_wallpapers = {
+    'https://www.youtube.com/watch?v=lH6qlF_iegU',
+    'https://www.youtube.com/watch?v=G2CHyuF74R0',
+    'https://www.youtube.com/watch?v=J2qDRJdTGow',
+}
+local transp_bg_wallpapers_index = 1
+transp_bg_wallpapers_index_max = 0
+for _ in pairs(transp_bg_wallpapers) do
+    transp_bg_wallpapers_index_max = transp_bg_wallpapers_index_max + 1
+end
+function transp_bg (arg)
+    vim.cmd[[hi Normal ctermbg=None guibg=None]]
+
+    local timeout = 5
+    local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
+
+    if arg == '+' or arg == '-' then
+        os.execute('dconf write ' .. addr .. ' $(($(dconf read ' .. addr .. ') ' .. arg .. '5))')
+    elseif arg == 'reset' then
+        os.execute('dconf write ' .. addr .. ' ' .. 20)
+        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
+        vim.cmd[[execute 'colo' g:colors_name]]
+    else
+        os.execute('dconf write ' .. addr .. ' ' .. 20)
+        os.execute('timeout ' .. timeout .. ' bash -c "while pkill mpv >/dev/null 2>&1; do :; done"')
+        os.execute('mpv "' .. transp_bg_wallpapers[transp_bg_wallpapers_index] .. '" --no-audio --loop -fs >/dev/null 2>&1 & timeout ' .. timeout .. ' bash -c "while ! wmctrl -l 2>/dev/null | grep mpv >/dev/null 2>&1; do :; done"')
+        os.execute('wmctrl -a ${PWD##*/} >/dev/null 2>&1')
+        transp_bg_wallpapers_index = transp_bg_wallpapers_index % transp_bg_wallpapers_index_max + 1
+    end
+end
+vim.cmd[[au VimLeave * lua os.execute('while pkill mpv >/dev/null 2>&1; do :; done')]]
+vim.api.nvim_set_keymap('', '<C-Down>', "<Cmd>lua transp_bg('-')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Up>', "<Cmd>lua transp_bg('+')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Left>', "<Cmd>lua transp_bg('reset')<Cr>", { noremap = true })
+vim.api.nvim_set_keymap('', '<C-Right>', "<Cmd>lua transp_bg()<Cr>", { noremap = true })
