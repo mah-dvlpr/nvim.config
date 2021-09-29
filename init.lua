@@ -55,6 +55,7 @@ require('packer').startup({
         use { 'NLKNguyen/papercolor-theme' }
         use { 'tomasiser/vim-code-dark' }
         use { 'morhetz/gruvbox' }
+        use { 'romgrk/nvim-treesitter-context' }
         use { 'hoob3rt/lualine.nvim' }
         use { 'dstein64/nvim-scrollview' }
     end
@@ -166,7 +167,7 @@ if not os.execute('c++ --version >/dev/null 2>&1') then
     error("C++ compiler package ('gcc-c++') is not installed. Installing languages in/with treesitter will not work (fail to compile).")
 end
 require('nvim-treesitter.configs').setup({
-     ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
+    ensure_installed = { 'bash', 'c', 'cmake', 'comment', 'cpp', 'dockerfile', 'java', 'javascript', 'json', 'latex', 'lua', 'php', 'python', 'regex', 'rust', 'typescript', 'yaml' },
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
@@ -249,12 +250,33 @@ vim.cmd[[au ColorScheme PaperColor hi Normal ctermbg=234 guibg=#1C1C1C]]
 
 
 ----------------------------------------------------------------------------------------------------
+-- romgrk/nvim-treesitter-context
+require'treesitter-context'.setup{
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    throttle = true, -- Throttles plugin updates (may improve performance)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+        default = {
+            'class',
+            'function',
+            'method',
+        },
+        -- Example for a specific filetype.
+        -- If a pattern is missing, *open a PR* so everyone can benefit.
+        --   rust = {
+        --       'impl_item',
+        --   },
+    },
+}
+
+
+----------------------------------------------------------------------------------------------------
 -- hoob3rt/lualine.nvim
 require('lualine').setup({
   options = {
     icons_enabled = false,
     theme = 'nord',
-    component_separators = {'❯', '❮'},
+    component_separators = {'|', '|'},
     section_separators = {'', ''},
   },
   sections = {
