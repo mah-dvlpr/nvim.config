@@ -68,17 +68,7 @@ require('packer').startup(function()
     {
       'neovim/nvim-lspconfig',
       config = function()
-        require('nvim-lsp-installer').setup {
-          automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-          ui = {
-            icons = {
-              server_installed = '✓',
-              server_pending = '➜',
-              server_uninstalled = '✗'
-            }
-          }
-        }
-        local lspconfig = require('lspconfig')
+        require('nvim-lsp-installer').setup {}
       end
     }
   }
@@ -108,6 +98,20 @@ require('packer').startup(function()
     require('packer').sync()
   end
 end)
+
+-- ================================================================
+-- nvim-lsp-installer
+require('nvim-lsp-installer').setup {
+  automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+  ui = {
+    icons = {
+      server_installed = '✓',
+      server_pending = '➜',
+      server_uninstalled = '✗'
+    }
+  }
+}
+
 
 -- ================================================================
 -- lspconfig
