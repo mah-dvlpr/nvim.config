@@ -1,6 +1,6 @@
 -- ================================================================
 -- Custom (Neo)Vim definitions
-function map(mode, lhs, rhs, opts)
+local function map(mode, lhs, rhs, opts)
     local options = { noremap = true }
     if opts then
         options = vim.tbl_extend("force", options, opts)
@@ -8,7 +8,7 @@ function map(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-function map_buf(bufnr, mode, lhs, rhs, opts)
+local function map_buf(bufnr, mode, lhs, rhs, opts)
     local options = { noremap = true }
     if opts then
         options = vim.tbl_extend("force", options, opts)
@@ -43,15 +43,9 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 vim.cmd[[packadd packer.nvim]]
-require('packer').startup(function(use)
-    use {
-        'wbthomason/packer.nvim'
-    }
-end)
+require('packer').startup(function()
+    use 'wbthomason/packer.nvim'
 
--- ================================================================
--- nvim-lsp-installer (HAS TO BE RUN BEFORE lspconfig!)
-require('packer').startup(function(use)
     use {
         "williamboman/nvim-lsp-installer",
         {
@@ -65,61 +59,57 @@ require('packer').startup(function(use)
     }
 end)
 
---require("nvim-lsp-installer").setup({
---    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
---    ui = {
---        icons = {
---            server_installed = "✓",
---            server_pending = "➜",
---            server_uninstalled = "✗"
---        }
---    }
---})
+-- ================================================================
+-- nvim-lsp-installer (HAS TO BE RUN BEFORE lspconfig!)
+require("nvim-lsp-installer").setup({
+    automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+    ui = {
+        icons = {
+            server_installed = "✓",
+            server_pending = "➜",
+            server_uninstalled = "✗"
+        }
+    }
+})
 
 -- ================================================================
 -- lspconfig
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim' -- Package manager
-    use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-end)
-
----- Mappings.
+-- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
 map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
-map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
-map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
+--map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
+--map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
 map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
     -- Enable completion triggered by <c-x><c-o>
-    --
-    vim.bo(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     map_buf(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
     map_buf(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+    map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
     map_buf(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
     map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
     map_buf(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
     map_buf(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
-    map_buf(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
-    map_buf(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    --map_buf(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
+    --map_buf(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
     map_buf(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    map_buf(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-    map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    map_buf(bufnr, 'n', '<c>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
     map_buf(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'rust_analyzer', 'tsserver' }
+local servers = { 'sumneko_lua', 'rust_analyzer', 'clangd', 'dartls' }
 for _, lsp in pairs(servers) do
-    require('lspconfig')[lsp].setup {
+    require('lspconfig')[lsp].setup{
       on_attach = on_attach,
     }
 end
