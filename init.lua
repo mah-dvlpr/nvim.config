@@ -113,4 +113,11 @@ for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup{
     on_attach = on_attach,
   }
+
+  -- Language specific options
+  if lsp == 'sumneko_lua' then
+    vim.bo.shiftwidth = 2                    -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
+    vim.bo.tabstop = 2                       -- Length of an actual TAB, i.e. not whitespace(s).
+    vim.bo.softtabstop = 2                   -- I have no idea what this does.
+  end
 end
