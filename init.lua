@@ -66,7 +66,7 @@ require('packer').startup(function()
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
-      require('lsp_signature').on_attach()
+      require('lsp_signature').setup{}
       table.insert(lsp_on_attach_configs, function(client, bufnr)
         map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', lsp_on_attach_opts)
         map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', lsp_on_attach_opts)
