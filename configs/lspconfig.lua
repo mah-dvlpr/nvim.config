@@ -1,4 +1,3 @@
-package.path = "../?.lua;" .. package.path
 require('global')
 
 local function config()
