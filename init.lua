@@ -18,34 +18,36 @@ end
 
 -- ================================================================
 -- (Neo)Vim options
-vim.opt.clipboard = 'unnamedplus'         -- Enable system clipboard
+vim.opt.clipboard = 'unnamedplus' -- Enable system clipboard
 --vim.opt.syntax = 'on'                     -- Enable syntax linting (not needed with an LSP?)
-vim.opt.termguicolors = true              -- Use true colors, instead oluf just usual 256-bit colors.
-vim.opt.wrap = false                      -- Do not wrap lines, plain and simple.
-vim.opt.number = true                     -- Absolute numbering.
-vim.opt.cursorline = true                 -- Highlight current line.
-vim.opt.list = true                       -- Render special characters such as whitespace and TAB's.
-vim.opt.listchars = "tab:> ,space:·"      -- Render whitespace as '·'.
-vim.opt.expandtab = true                  -- Expand TABs into spaces when tabbing.
-vim.opt.shiftwidth = 4                    -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
-vim.opt.tabstop = 4                       -- Length of an actual TAB, i.e. not whitespace(s).
-vim.opt.softtabstop = 4                   -- I have no idea what this does.
-vim.opt.backspace = 'start,indent,eol'    -- Allow performing backspace over (almost) everything in insert mode.
-vim.opt.mouse = 'a'                       -- DON'T JUDGE ME! (allows mouse support in all modes).
-vim.opt.scrolloff = 16                    -- Keep cursor centered by making the pre/post buffer padding very large.
-vim.opt.hidden = true                     -- Keep buffers open when switching between files.
+vim.opt.termguicolors = true -- Use true colors, instead oluf just usual 256-bit colors.
+vim.opt.wrap = false -- Do not wrap lines, plain and simple.
+vim.opt.number = true -- Absolute numbering.
+vim.opt.cursorline = true -- Highlight current line.
+vim.opt.list = true -- Render special characters such as whitespace and TAB's.
+vim.opt.listchars = "tab:> ,space:·" -- Render whitespace as '·'.
+vim.opt.expandtab = true -- Expand TABs into spaces when tabbing.
+vim.opt.shiftwidth = 4 -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
+vim.opt.tabstop = 4 -- Length of an actual TAB, i.e. not whitespace(s).
+vim.opt.softtabstop = 4 -- I have no idea what this does.
+vim.opt.backspace = 'start,indent,eol' -- Allow performing backspace over (almost) everything in insert mode.
+vim.opt.mouse = 'a' -- DON'T JUDGE ME! (allows mouse support in all modes).
+vim.opt.scrolloff = 16 -- Keep cursor centered by making the pre/post buffer padding very large.
+vim.opt.hidden = true -- Keep buffers open when switching between files.
 vim.g.mapleader = 'ö'
 
 -- ================================================================
 -- Plugins
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
 end
 
-vim.cmd[[packadd packer.nvim]]
+vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function()
-  use 'wbthomason/packer.nvim'
+  use {
+    'wbthomason/packer.nvim'
+  }
 
   use {
     "williamboman/nvim-lsp-installer",
@@ -57,6 +59,10 @@ require('packer').startup(function()
       end
     }
   }
+
+  use {
+    "ray-x/lsp_signature.nvim",
+  }
 end)
 
 -- ================================================================
@@ -66,8 +72,8 @@ require("nvim-lsp-installer").setup({
   ui = {
     icons = {
       server_installed = "✓",
-        server_pending = "➜",
-        server_uninstalled = "✗"
+      server_pending = "➜",
+      server_uninstalled = "✗"
     }
   }
 })
@@ -76,7 +82,7 @@ require("nvim-lsp-installer").setup({
 -- lspconfig
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
+local opts = { noremap = true, silent = true }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -94,20 +100,34 @@ local on_attach = function(client, bufnr)
   map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
   map_buf(bufnr, 'n', '<C-i>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   map_buf(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
+
+  -- Packages using LSP
+  require("lsp_signature").on_attach()
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { 'sumneko_lua', 'rust_analyzer', 'clangd', 'dartls' }
 for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup{
+  require('lspconfig')[lsp].setup {
     on_attach = on_attach,
   }
-
-  -- Language specific options
-  if lsp == 'sumneko_lua' then
-    vim.bo.shiftwidth = 2                    -- Set amount of whitespace characters to insert/remove when tabbing/backspace.
-    vim.bo.tabstop = 2                       -- Length of an actual TAB, i.e. not whitespace(s).
-    vim.bo.softtabstop = 2                   -- I have no idea what this does.
-  end
 end
+
+-- Language (LSP) specific configurations
+require('lspconfig').sumneko_lua.setup {
+  on_attach = function(client, bufnr)
+    vim.bo.shiftwidth = 2
+    vim.bo.tabstop = 2
+    vim.bo.softtabstop = 2
+
+    on_attach(client, bufnr)
+  end,
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { 'vim', 'use' }
+      }
+    }
+  }
+}
