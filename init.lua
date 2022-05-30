@@ -1,5 +1,5 @@
 -- ================================================================
--- Custom (Neo)Vim definitions
+-- Custom (Neo)Vim definitions and declarations
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true }
   if opts then
@@ -15,6 +15,9 @@ local function map_buf(bufnr, mode, lhs, rhs, opts)
   end
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, options)
 end
+
+local lsp_on_attach_opts = { noremap = true, silent = true }
+local lsp_on_attach_configs = {}
 
 -- ================================================================
 -- (Neo)Vim options
@@ -62,6 +65,13 @@ require('packer').startup(function()
 
   use {
     "ray-x/lsp_signature.nvim",
+    config = function()
+      require('lsp_signature').on_attach()
+      table.insert(lsp_on_attach_configs, function(client, bufnr)
+        map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', lsp_on_attach_opts)
+        map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', lsp_on_attach_opts)
+      end)
+    end
   }
 end)
 
@@ -82,27 +92,22 @@ require("nvim-lsp-installer").setup({
 -- lspconfig
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- Generic mappings.
+  map_buf(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', lsp_on_attach_opts)
+  map_buf(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', lsp_on_attach_opts)
+  map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', lsp_on_attach_opts)
+  map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', lsp_on_attach_opts)
+  map_buf(bufnr, 'n', '<C-i>', '<cmd>lua vim.lsp.buf.code_action()<cr>', lsp_on_attach_opts)
+  map_buf(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', lsp_on_attach_opts)
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  map_buf(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-  map_buf(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-  map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-  map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-  map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-  map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-  map_buf(bufnr, 'n', '<C-i>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-  map_buf(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
-
-  -- Packages using LSP
-  require("lsp_signature").on_attach()
+  -- Call registered handlers
+  for callback in pairs(lsp_on_attach_configs) do
+    callback(client, bufnr)
+  end
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
