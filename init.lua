@@ -54,7 +54,6 @@ require('packer').startup(function()
       config = function()
         require("nvim-lsp-installer").setup {}
         local lspconfig = require("lspconfig")
-        lspconfig.sumneko_lua.setup {}
       end
     }
   }
@@ -78,10 +77,6 @@ require("nvim-lsp-installer").setup({
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
---map('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<cr>', opts)
---map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
---map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
---map('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -95,12 +90,7 @@ local on_attach = function(client, bufnr)
   map_buf(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
   map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
   map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-  --map_buf(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
   map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-  map_buf(bufnr, 'n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>', opts)
-  map_buf(bufnr, 'n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>', opts)
-  --map_buf(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>', opts)
-  --map_buf(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
   map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
   map_buf(bufnr, 'n', '<C-i>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
   map_buf(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', opts)
