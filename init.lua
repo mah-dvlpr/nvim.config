@@ -68,7 +68,16 @@ require('packer').startup(function()
     {
       'neovim/nvim-lspconfig',
       config = function()
-        require('nvim-lsp-installer').setup {}
+        require('nvim-lsp-installer').setup {
+          automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
+          ui = {
+            icons = {
+              server_installed = '✓',
+              server_pending = '➜',
+              server_uninstalled = '✗'
+            }
+          }
+        }
         local lspconfig = require('lspconfig')
       end
     }
@@ -95,27 +104,13 @@ require('packer').startup(function()
     }
   }
 
-  require('packer').sync()
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end)
 
 -- ================================================================
--- nvim-lsp-installer
-require('nvim-lsp-installer').setup({
-  automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
-  ui = {
-    icons = {
-      server_installed = '✓',
-      server_pending = '➜',
-      server_uninstalled = '✗'
-    }
-  }
-})
-
--- ================================================================
 -- lspconfig
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
