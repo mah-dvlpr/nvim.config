@@ -40,6 +40,11 @@ vim.opt.hidden = true -- Keep buffers open when switching between files.
 vim.g.mapleader = 'ö'
 
 -- ================================================================
+-- Custom keymaps
+map('', 'J', '8j', {noremap = true})
+map('', 'K', '8k', {noremap = true})
+
+-- ================================================================
 -- Plugins
 local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 local packer_bootstrap
