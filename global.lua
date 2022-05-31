@@ -41,10 +41,10 @@ function global.transp_bg(arg)
 end
 
 local opts = { noremap = true }
-global.map('', '<C-Down>', "<cmd>lua transp_bg('-')<cr>", opts)
-global.map('', '<C-Up>', "<cmd>lua transp_bg('+')<cr>", opts)
-global.map('', '<C-Left>', "<cmd>lua transp_bg('color')<cr>", opts)
-global.map('', '<C-Right>', "<cmd>lua transp_bg('transparent')<cr>", opts)
+global.map('', '<C-Down>', "<cmd>lua require('global').transp_bg('-')<cr>", opts)
+global.map('', '<C-Up>', "<cmd>lua require('global').transp_bg('+')<cr>", opts)
+global.map('', '<C-Left>', "<cmd>lua require('global').transp_bg('color')<cr>", opts)
+global.map('', '<C-Right>', "<cmd>lua require('global').transp_bg('transparent')<cr>", opts)
 
 return global
 
