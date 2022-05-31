@@ -88,4 +88,4 @@ require('nvim-lsp-installer').setup {
 
 -- ================================================================
 -- lspconfig - Has to be placed like this due to nvim-lsp-installer
-require('configs/lspconfig').config()
+require('plugins/lspconfig').config()
