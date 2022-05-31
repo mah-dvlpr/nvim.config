@@ -22,6 +22,9 @@ vim.opt.mouse = 'a' -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16 -- Keep cursor centered by making the pre/post buffer padding very large.
 vim.opt.hidden = true -- Keep buffers open when switching between files.
 vim.g.mapleader = 'ö'
+vim.cmd[[au ColorScheme * hi Normal ctermbg=none guibg=none]]
+vim.cmd[[au ColorScheme * hi NonText ctermbg=none guibg=none]]
+--vim.cmd[[colorscheme slate]]
 
 -- ================================================================
 -- Custom keymaps
@@ -40,11 +43,6 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use {
     'wbthomason/packer.nvim'
-  }
-
-  use {
-    'Mofiqul/vscode.nvim',
-    config = require('themes').vscode.config()
   }
 
   use {

@@ -1,6 +1,7 @@
 local global = require('global')
+local lspconfig = {}
 
-local function config()
+function lspconfig.config()
   local on_attach = function(client, bufnr)
     -- Generic mappings.
     global.map_buf(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', global.lsp_on_attach_opts)
@@ -20,8 +21,6 @@ local function config()
       callback(client, bufnr)
     end
   end
-
-
 
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
@@ -51,4 +50,4 @@ local function config()
   }
 end
 
-return { config = config }
+return lspconfig
