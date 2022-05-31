@@ -1,31 +1,27 @@
 local global = {}
 
-local function map(mode, lhs, rhs, opts)
+function global.map(mode, lhs, rhs, opts)
   local options = { noremap = true }
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
-global.map = map
 
-local function map_buf(bufnr, mode, lhs, rhs, opts)
+function global.map_buf(bufnr, mode, lhs, rhs, opts)
   local options = { noremap = true }
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, options)
 end
-global.map_buf = map_buf
 
-local lsp_on_attach_opts = { noremap = true, silent = true }
-global.lsp_on_attach_opts = lsp_on_attach_opts
-local lsp_on_attach_configs = {}
-global.lsp_on_attach_configs = lsp_on_attach_configs
+global.lsp_on_attach_opts = { noremap = true, silent = true }
+global.lsp_on_attach_configs = {}
 
 -- ================================================================
 -- Custom 'Plugins'
-function transp_bg(arg)
+function global.transp_bg(arg)
   local addr = '/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/background-transparency-percent'
 
   if arg == '+' or arg == '-' then
@@ -43,12 +39,12 @@ function transp_bg(arg)
     vim.cmd([[colorscheme vscode]])
   end
 end
-global.transp_bg = transp_bg
 
 local opts = { noremap = true }
-map('', '<C-Down>', "<cmd>lua transp_bg('-')<cr>", opts)
-map('', '<C-Up>', "<cmd>lua transp_bg('+')<cr>", opts)
-map('', '<C-Left>', "<cmd>lua transp_bg('color')<cr>", opts)
-map('', '<C-Right>', "<cmd>lua transp_bg('transparent')<cr>", opts)
+global.map('', '<C-Down>', "<cmd>lua transp_bg('-')<cr>", opts)
+global.map('', '<C-Up>', "<cmd>lua transp_bg('+')<cr>", opts)
+global.map('', '<C-Left>', "<cmd>lua transp_bg('color')<cr>", opts)
+global.map('', '<C-Right>', "<cmd>lua transp_bg('transparent')<cr>", opts)
 
 return global
+
