@@ -1,6 +1,6 @@
 -- ================================================================
 -- Include global modules
-package.path = vim.fn.stdpath('config') .. '/?.lua;' .. package.path -- Will be set for all other included modules via require
+package.path = vim.fn.stdpath('config') .. '/?.lua;' -- Will be set for all other included modules via require
 require('global')
 
 -- ================================================================
