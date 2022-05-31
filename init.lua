@@ -66,20 +66,6 @@ require('packer').startup(function()
     }
   }
 
-  use {
-    'ms-jpq/coq_nvim',
-    branch = 'coq',
-    requires = {
-      'ms-jpq/coq.artifacts',
-      branch = 'artifacts'
-    }
-  }
-
-  --use {
-  --  'ms-jpq/coq.artifacts',
-  --  branch = 'artifacts'
-  --}
-
   if packer_bootstrap then
     require('packer').sync()
   end
