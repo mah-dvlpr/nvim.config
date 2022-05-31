@@ -33,12 +33,7 @@ global.map('', 'K', '8k', { noremap = true })
 
 -- ================================================================
 -- Plugins
-local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-local packer_bootstrap
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-end
-
+-- git clone --depth 1 https://github.com/wbthomason/packer.nvim "${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
 vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function()
   use {
@@ -49,7 +44,6 @@ require('packer').startup(function()
     'williamboman/nvim-lsp-installer',
     requires = {
       'neovim/nvim-lspconfig',
-      config = require('nvim-lsp-installer').setup()
     },
     config = function()
       require('nvim-lsp-installer').setup {
@@ -69,17 +63,15 @@ require('packer').startup(function()
   use {
     'nvim-treesitter/nvim-treesitter',
     run = 'TSUpdate',
-    setup = require('nvim-treesitter.configs').setup {
+    config = function()
+      require('nvim-treesitter.configs').setup {
       ensure_installed = { 'c', 'lua', 'rust' },
       sync_install = false,
       highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-    }
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+      }
+    end,
   }
-
-  if packer_bootstrap then
-    require('packer').sync()
-  end
 end)
