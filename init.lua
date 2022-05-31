@@ -25,8 +25,8 @@ vim.g.mapleader = 'ö'
 
 -- ================================================================
 -- Custom keymaps
-global.map('', 'J', '8j', {noremap = true})
-global.map('', 'K', '8k', {noremap = true})
+global.map('', 'J', '8j', { noremap = true })
+global.map('', 'K', '8k', { noremap = true })
 
 -- ================================================================
 -- Plugins
