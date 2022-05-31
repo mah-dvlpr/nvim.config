@@ -1,4 +1,4 @@
-require('global')
+local global = require('global')
 
 local vscode = {
   config = function()

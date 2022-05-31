@@ -1,21 +1,27 @@
-function map(mode, lhs, rhs, opts)
+local global = {}
+
+local function map(mode, lhs, rhs, opts)
   local options = { noremap = true }
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
   vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
+global.map = map
 
-function map_buf(bufnr, mode, lhs, rhs, opts)
+local function map_buf(bufnr, mode, lhs, rhs, opts)
   local options = { noremap = true }
   if opts then
     options = vim.tbl_extend('force', options, opts)
   end
   vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, options)
 end
+global.map_buf = map_buf
 
-lsp_on_attach_opts = { noremap = true, silent = true }
-lsp_on_attach_configs = {}
+local lsp_on_attach_opts = { noremap = true, silent = true }
+global.lsp_on_attach_opts = lsp_on_attach_opts
+local lsp_on_attach_configs = {}
+global.lsp_on_attach_configs = lsp_on_attach_configs
 
 -- ================================================================
 -- Custom 'Plugins'
@@ -37,9 +43,12 @@ function transp_bg(arg)
     vim.cmd([[colorscheme vscode]])
   end
 end
+global.transp_bg = transp_bg
 
 local opts = { noremap = true }
 map('', '<C-Down>', "<cmd>lua transp_bg('-')<cr>", opts)
 map('', '<C-Up>', "<cmd>lua transp_bg('+')<cr>", opts)
 map('', '<C-Left>', "<cmd>lua transp_bg('color')<cr>", opts)
 map('', '<C-Right>', "<cmd>lua transp_bg('transparent')<cr>", opts)
+
+return global

@@ -1,7 +1,7 @@
 -- ================================================================
 -- Include global modules
 package.path = vim.fn.stdpath('config') .. '/?.lua;' -- Will be set for all other included modules via require
-require('global')
+local global = require('global')
 
 -- ================================================================
 -- (Neo)Vim options
@@ -25,8 +25,8 @@ vim.g.mapleader = 'ö'
 
 -- ================================================================
 -- Custom keymaps
-map('', 'J', '8j', {noremap = true})
-map('', 'K', '8k', {noremap = true})
+global.map('', 'J', '8j', {noremap = true})
+global.map('', 'K', '8k', {noremap = true})
 
 -- ================================================================
 -- Plugins
