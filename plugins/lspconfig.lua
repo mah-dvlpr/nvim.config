@@ -9,6 +9,7 @@ function lspconfig.config()
     -- Generic mappings.
     global.map_buf(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', global.lsp_on_attach_opts)
+    global.map_buf(bufnr, 'n', '<C-LeftMouse>', '<LeftMouse><cmd>lua vim.lsp.buf.definition()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', '<C-a>', '<cmd>lua vim.lsp.buf.code_action()<cr>', global.lsp_on_attach_opts)
