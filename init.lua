@@ -21,9 +21,11 @@ vim.opt.backspace = 'start,indent,eol' -- Allow performing backspace over (almos
 vim.opt.mouse = 'a' -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16 -- Keep cursor centered by making the pre/post buffer padding very large.
 vim.opt.hidden = true -- Keep buffers open when switching between files.
+vim.opt.laststatus = 3 -- Global statusline
 vim.g.mapleader = 'ö'
-vim.cmd [[au ColorScheme * hi Normal ctermbg=none guibg=none]]
-vim.cmd [[au ColorScheme * hi NonText ctermbg=none guibg=none]]
+vim.cmd[[hi WinSeparator ctermbg=none guibg=none]]
+vim.cmd[[au ColorScheme * hi Normal ctermbg=none guibg=none]]
+vim.cmd[[au ColorScheme * hi NonText ctermbg=none guibg=none]]
 --vim.cmd[[colorscheme slate]]
 
 -- ================================================================
@@ -81,9 +83,9 @@ require('packer').startup(function()
       local global = require('global')
       local opts = { noremap = true, silent = true }
 
-      global.map('', '<C-f>', '<cmd>lua require("telescope.builtin").find_files()<cr>', opts)
-      global.map('', '<C-g>', '<cmd>lua require("telescope.builtin").live_grep()<cr>', opts)
-      global.map('', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>', opts)
+      global.map('', '<leader>f', '<cmd>lua require("telescope.builtin").find_files()<cr>', opts)
+      global.map('', '<leader>g', '<cmd>lua require("telescope.builtin").live_grep()<cr>', opts)
+      global.map('', '<leader>b', '<cmd>lua require("telescope.builtin").buffers()<cr>', opts)
 
       if not os.execute('rg --version >/dev/null 2>&1') then
         error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work until this program is installed.")

@@ -12,13 +12,11 @@ function lspconfig.config()
     global.map_buf(bufnr, 'n', '<C-LeftMouse>', '<LeftMouse><cmd>lua vim.lsp.buf.definition()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', global.lsp_on_attach_opts)
     global.map_buf(bufnr, 'n', '<f2>', '<cmd>lua vim.lsp.buf.rename()<cr>', global.lsp_on_attach_opts)
-    global.map_buf(bufnr, 'n', '<C-a>', '<cmd>lua vim.lsp.buf.code_action()<cr>', global.lsp_on_attach_opts)
-    global.map_buf(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<cr>', global.lsp_on_attach_opts)
+    global.map_buf(bufnr, 'n', '<leader>a', '<cmd>lua vim.lsp.buf.code_action()<cr>', global.lsp_on_attach_opts)
+    global.map_buf(bufnr, 'n', '<leader>q', '<cmd>lua vim.lsp.buf.formatting()<cr>', global.lsp_on_attach_opts)
 
-    --  table.insert(global.lsp_on_attach_configs, function(client, bufnr)
-    --    Map_buf(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', global.lsp_on_attach_opts)
-    --    Map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', global.lsp_on_attach_opts)
-    --  end)
+    global.map_buf(bufnr, 'n', '<C-h>', '<cmd>lua vim.lsp.buf.hover()<cr>', global.lsp_on_attach_opts)
+    global.map_buf(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<cr>', global.lsp_on_attach_opts)
 
     -- Call registered handlers
     for callback in pairs(global.lsp_on_attach_configs) do
