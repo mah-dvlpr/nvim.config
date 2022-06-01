@@ -108,15 +108,36 @@ require('packer').startup(function()
   }
 
   use {
-    disable = true,
-    'tjdevries/colorbuddy.vim',
-    requires = { 'tjdevries/gruvbuddy.nvim' },
+    'hrsh7th/nvim-cmp',
+    requires = {
+      { 'neovim/nvim-lspconfig' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+    },
     config = function()
-      require('colorbuddy').colorscheme('gruvbuddy')
+      require'cmp'.setup {
+        sources = {
+          { name = 'nvim_lsp' }
+        }
+      }
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
     end
   }
 
   use {
+    'Mofiqul/vscode.nvim',
+    config = function()
+      vim.o.background = 'dark'
+      vim.g.vscode_transparent = 1
+      vim.g.vscode_italic_comment = 1
+      vim.g.vscode_disable_nvimtree_bg = true
+      vim.cmd([[colorscheme vscode]])
+    end
+  }
+
+  use {
+    disable = true,
     'romgrk/barbar.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function()
@@ -138,6 +159,17 @@ require('packer').startup(function()
       global.map('n', '<A-p>', ':BufferPin<CR>', opts)
       -- Close buffer
       global.map('n', '<A-c>', ':BufferClose<CR>', opts)
+
+      require('bufferline').setup {
+        options = {
+          icons = 'numbers',
+          icon_separator_active = '▎',
+          icon_separator_inactive = '▎',
+          icon_close_tab = 'x',
+          icon_close_tab_modified = '●',
+          icon_pinned = '*',
+        }
+      }
     end,
   }
 
@@ -177,14 +209,14 @@ require('packer').startup(function()
 
     end,
   }
-end)
 
--- Complains if put inside :(
-vim.g.bufferline = {
-  icons = 'numbers',
-  icon_separator_active = '▎',
-  icon_separator_inactive = '▎',
-  icon_close_tab = 'x',
-  icon_close_tab_modified = '●',
-  icon_pinned = '*',
-}
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    config = function()
+      require("indent_blankline").setup {
+        -- for example, context is off by default, use this to turn it on
+        show_current_context = true,
+      }
+    end
+  }
+end)
