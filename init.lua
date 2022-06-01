@@ -23,9 +23,9 @@ vim.opt.scrolloff = 16 -- Keep cursor centered by making the pre/post buffer pad
 vim.opt.hidden = true -- Keep buffers open when switching between files.
 vim.opt.laststatus = 3 -- Global statusline
 vim.g.mapleader = 'ö'
-vim.cmd[[hi WinSeparator ctermbg=none guibg=none]]
-vim.cmd[[au ColorScheme * hi Normal ctermbg=none guibg=none]]
-vim.cmd[[au ColorScheme * hi NonText ctermbg=none guibg=none]]
+vim.cmd [[hi WinSeparator ctermbg=none guibg=none]]
+vim.cmd [[au ColorScheme * hi Normal ctermbg=none guibg=none]]
+vim.cmd [[au ColorScheme * hi NonText ctermbg=none guibg=none]]
 --vim.cmd[[colorscheme slate]]
 
 -- ================================================================
@@ -90,6 +90,14 @@ require('packer').startup(function()
       if not os.execute('rg --version >/dev/null 2>&1') then
         error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work until this program is installed.")
       end
+
+      require("telescope").setup {
+        pickers = {
+          find_files = {
+            disable_devicons = true
+          },
+        },
+      }
     end,
   }
 
@@ -173,4 +181,3 @@ require('packer').startup(function()
     end,
   }
 end)
-
