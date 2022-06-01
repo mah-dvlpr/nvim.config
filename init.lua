@@ -79,9 +79,14 @@ require('packer').startup(function()
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
       local global = require('global')
+
       global.map('', '<C-f>', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
       global.map('', '<C-g>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
       global.map('', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>')
+
+      if not os.execute('rg --version >/dev/null 2>&1') then
+        error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work until this program is installed.")
+      end
     end,
   }
 end)
