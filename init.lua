@@ -96,6 +96,12 @@ require('packer').startup(function()
           find_files = {
             disable_devicons = true
           },
+          live_grep = {
+            disable_devicons = true
+          },
+          buffers = {
+            disable_devicons = true
+          },
         },
       }
     end,
@@ -169,15 +175,16 @@ require('packer').startup(function()
         extensions = {}
       }
 
-      -- If this doesn't work on a clean install... move it outside :(
-      vim.g.bufferline = {
-        icons = 'numbers',
-        icon_separator_active = '▎',
-        icon_separator_inactive = '▎',
-        icon_close_tab = 'x',
-        icon_close_tab_modified = '●',
-        icon_pinned = '*',
-      }
     end,
   }
 end)
+
+-- Complains if put inside :(
+vim.g.bufferline = {
+  icons = 'numbers',
+  icon_separator_active = '▎',
+  icon_separator_inactive = '▎',
+  icon_close_tab = 'x',
+  icon_close_tab_modified = '●',
+  icon_pinned = '*',
+}
