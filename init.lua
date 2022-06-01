@@ -79,14 +79,78 @@ require('packer').startup(function()
     requires = { 'nvim-lua/plenary.nvim' },
     config = function()
       local global = require('global')
+      local opts = { noremap = true, silent = true }
 
-      global.map('', '<C-f>', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
-      global.map('', '<C-g>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
-      global.map('', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>')
+      global.map('', '<C-f>', '<cmd>lua require("telescope.builtin").find_files()<cr>', opts)
+      global.map('', '<C-g>', '<cmd>lua require("telescope.builtin").live_grep()<cr>', opts)
+      global.map('', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>', opts)
 
       if not os.execute('rg --version >/dev/null 2>&1') then
         error("Ripgrep package ('ripgrep') providing the command 'rg' is not installed. Live-grep will not work until this program is installed.")
       end
     end,
   }
+
+  use {
+    disable = true,
+    'tjdevries/colorbuddy.vim',
+    requires = { 'tjdevries/gruvbuddy.nvim' },
+    config = function()
+      require('colorbuddy').colorscheme('gruvbuddy')
+    end
+  }
+
+  use {
+    'romgrk/barbar.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      local global = require('global')
+      local opts = { noremap = true, silent = true }
+
+      global.map('n', '<A-,>', ':BufferPrevious<CR>', opts)
+      global.map('n', '<A-.>', ':BufferNext<CR>', opts)
+      -- Re-order to previous/next
+      global.map('n', '<A-<>', ':BufferMovePrevious<CR>', opts)
+      global.map('n', '<A->>', ' :BufferMoveNext<CR>', opts)
+      -- Goto buffer in position...
+      global.map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
+      global.map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
+      global.map('n', '<A-3>', ':BufferGoto 3<CR>', opts)
+      global.map('n', '<A-4>', ':BufferGoto 4<CR>', opts)
+      global.map('n', '<A-5>', ':BufferGoto 5<CR>', opts)
+      global.map('n', '<A-6>', ':BufferGoto 6<CR>', opts)
+      global.map('n', '<A-7>', ':BufferGoto 7<CR>', opts)
+      global.map('n', '<A-8>', ':BufferGoto 8<CR>', opts)
+      global.map('n', '<A-9>', ':BufferGoto 9<CR>', opts)
+      global.map('n', '<A-0>', ':BufferLast<CR>', opts)
+      -- Pin/unpin buffer
+      global.map('n', '<A-p>', ':BufferPin<CR>', opts)
+      -- Close buffer
+      global.map('n', '<A-c>', ':BufferClose<CR>', opts)
+      -- Wipeout buffer
+      --                 :BufferWipeout<CR>
+      -- Close commands
+      --                 :BufferCloseAllButCurrent<CR>
+      --                 :BufferCloseAllButPinned<CR>
+      --                 :BufferCloseAllButCurrentOrPinned<CR>
+      --                 :BufferCloseBuffersLeft<CR>
+      --                 :BufferCloseBuffersRight<CR>
+      -- Magic buffer-picking mode
+      global.map('n', '<C-p>', ':BufferPick<CR>', opts)
+      -- Sort automatically by...
+      global.map('n', '<Space>bb', ':BufferOrderByBufferNumber<CR>', opts)
+      global.map('n', '<Space>bd', ':BufferOrderByDirectory<CR>', opts)
+      global.map('n', '<Space>bl', ':BufferOrderByLanguage<CR>', opts)
+      global.map('n', '<Space>bw', ':BufferOrderByWindowNumber<CR>', opts)
+    end
+  }
 end)
+
+vim.g.bufferline = {
+  icons = 'numbers',
+  icon_separator_active = '▎',
+  icon_separator_inactive = '▎',
+  icon_close_tab = 'x',
+  icon_close_tab_modified = '●',
+  icon_pinned = '*',
+}
