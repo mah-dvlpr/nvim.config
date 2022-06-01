@@ -158,15 +158,17 @@ require('packer').startup(function()
         tabline = {},
         extensions = {}
       }
+
+      -- If this doesn't work on a clean install... move it outside :(
+      vim.g.bufferline = {
+        icons = 'numbers',
+        icon_separator_active = '▎',
+        icon_separator_inactive = '▎',
+        icon_close_tab = 'x',
+        icon_close_tab_modified = '●',
+        icon_pinned = '*',
+      }
     end,
   }
 end)
 
-vim.g.bufferline = {
-  icons = 'numbers',
-  icon_separator_active = '▎',
-  icon_separator_inactive = '▎',
-  icon_close_tab = 'x',
-  icon_close_tab_modified = '●',
-  icon_pinned = '*',
-}
