@@ -107,11 +107,6 @@ require('packer').startup(function()
       local global = require('global')
       local opts = { noremap = true, silent = true }
 
-      global.map('n', '<A-,>', ':BufferPrevious<CR>', opts)
-      global.map('n', '<A-.>', ':BufferNext<CR>', opts)
-      -- Re-order to previous/next
-      global.map('n', '<A-<>', ':BufferMovePrevious<CR>', opts)
-      global.map('n', '<A->>', ' :BufferMoveNext<CR>', opts)
       -- Goto buffer in position...
       global.map('n', '<A-1>', ':BufferGoto 1<CR>', opts)
       global.map('n', '<A-2>', ':BufferGoto 2<CR>', opts)
@@ -127,21 +122,6 @@ require('packer').startup(function()
       global.map('n', '<A-p>', ':BufferPin<CR>', opts)
       -- Close buffer
       global.map('n', '<A-c>', ':BufferClose<CR>', opts)
-      -- Wipeout buffer
-      --                 :BufferWipeout<CR>
-      -- Close commands
-      --                 :BufferCloseAllButCurrent<CR>
-      --                 :BufferCloseAllButPinned<CR>
-      --                 :BufferCloseAllButCurrentOrPinned<CR>
-      --                 :BufferCloseBuffersLeft<CR>
-      --                 :BufferCloseBuffersRight<CR>
-      -- Magic buffer-picking mode
-      global.map('n', '<C-p>', ':BufferPick<CR>', opts)
-      -- Sort automatically by...
-      global.map('n', '<Space>bb', ':BufferOrderByBufferNumber<CR>', opts)
-      global.map('n', '<Space>bd', ':BufferOrderByDirectory<CR>', opts)
-      global.map('n', '<Space>bl', ':BufferOrderByLanguage<CR>', opts)
-      global.map('n', '<Space>bw', ':BufferOrderByWindowNumber<CR>', opts)
     end,
   }
 
