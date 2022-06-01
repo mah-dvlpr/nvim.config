@@ -57,20 +57,31 @@ require('packer').startup(function()
         }
       }
       require('plugins/lspconfig').config()
-    end
+    end,
   }
 
   use {
     'nvim-treesitter/nvim-treesitter',
     config = function()
       require('nvim-treesitter.configs').setup {
-      ensure_installed = { 'c', 'lua', 'rust' },
-      sync_install = false,
-      highlight = {
+        ensure_installed = { 'c', 'lua', 'rust' },
+        sync_install = false,
+        highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
       }
+    end,
+  }
+
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      local global = require('global')
+      global.map('', '<C-f>', '<cmd>lua require("telescope.builtin").live_grep()<cr>')
+      global.map('', '<C-g>', '<cmd>lua require("telescope.builtin").find_files()<cr>')
+      global.map('', '<C-b>', '<cmd>lua require("telescope.builtin").buffers()<cr>')
     end,
   }
 end)
