@@ -22,6 +22,7 @@ vim.opt.mouse = 'a' -- DON'T JUDGE ME! (allows mouse support in all modes).
 vim.opt.scrolloff = 16 -- Keep cursor centered by making the pre/post buffer padding very large.
 vim.opt.hidden = true -- Keep buffers open when switching between files.
 vim.opt.laststatus = 3 -- Global statusline
+vim.opt.colorcolumn = '80,100,120'
 vim.g.mapleader = 'ö'
 vim.cmd [[hi WinSeparator ctermbg=none guibg=none]]
 vim.cmd [[au ColorScheme * hi Normal ctermbg=none guibg=none]]
@@ -111,21 +112,28 @@ require('packer').startup(function()
     'hrsh7th/nvim-cmp',
     requires = {
       { 'neovim/nvim-lspconfig' },
-      { 'hrsh7th/cmp-vsnip' },
-      { 'hrsh7th/vim-vsnip' },
+      { 'L3MON4D3/LuaSnip' },
+      { 'saadparwaiz1/cmp_luasnip' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'hrsh7th/cmp-nvim-lua' },
     },
     config = function()
       local cmp = require('cmp')
+      local luasnip = require('luasnip')
+
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
       cmp.setup {
         snippet = {
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
-          end,
+            require 'luasnip'.lsp_expand(args.body)
+          end
         },
         sources = {
-          { name = 'vsnip' },
+          { name = 'luasnip' },
           { name = 'nvim_lsp' },
           { name = 'nvim_lua' },
         },
@@ -133,6 +141,26 @@ require('packer').startup(function()
           ['<C-p>'] = cmp.mapping.select_prev_item(),
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<cr>'] = cmp.mapping.confirm(),
+          ["<tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         },
       }
 
