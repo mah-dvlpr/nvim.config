@@ -111,14 +111,31 @@ require('packer').startup(function()
     'hrsh7th/nvim-cmp',
     requires = {
       { 'neovim/nvim-lspconfig' },
+      { 'hrsh7th/cmp-vsnip' },
+      { 'hrsh7th/vim-vsnip' },
       { 'hrsh7th/cmp-nvim-lsp' },
+      { 'hrsh7th/cmp-nvim-lua' },
     },
     config = function()
-      require('cmp').setup {
+      local cmp = require('cmp')
+      cmp.setup {
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
         sources = {
-          { name = 'nvim_lsp' }
-        }
+          { name = 'vsnip' },
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lua' },
+        },
+        mapping = {
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<cr>'] = cmp.mapping.confirm(),
+        },
       }
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
     end
