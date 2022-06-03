@@ -138,9 +138,6 @@ require('packer').startup(function()
           { name = 'nvim_lua' },
         },
         mapping = {
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<cr>'] = cmp.mapping.confirm(),
           ["<tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
